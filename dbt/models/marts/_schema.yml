@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: fct_daily_sensor_kpi
+    description: "Gold – Daily sensor KPI aggregations (avg, p95, stddev). RBAC-protected."
+    columns:
+      - name: kpi_sk
+        tests: [unique, not_null]
+      - name: total_readings
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 1
+
+  - name: fct_daily_revenue
+    description: "Gold – Daily revenue by material group from SAP orders."
+    columns:
+      - name: revenue_sk
+        tests: [unique, not_null]
+      - name: total_revenue
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+  - name: dim_equipment
+    description: "Gold – Equipment dimension with lifecycle stage."
+    columns:
+      - name: equipment_sk
+        tests: [unique, not_null]
+
+  - name: dim_vendor
+    description: "Gold – Vendor dimension (SCD2-aware, current + historical)."
+    columns:
+      - name: vendor_sk
+        tests: [unique, not_null]
+
+  - name: dim_customer
+    description: "Gold – Customer dimension (placeholder for SAP integration)."
+    columns:
+      - name: customer_sk
+        tests: [unique, not_null]

@@ -1,0 +1,17 @@
+name: bronze_checkpoint
+config_version: 1.0
+class_name: Checkpoint
+run_name_template: "petrova_bronze_%Y%m%d_%H%M%S"
+validations:
+  - batch_request:
+      datasource_name: snowflake_petrova
+      data_connector_name: bronze_connector
+      data_asset_name: BRONZE.SENSOR_READINGS_PARQUET
+    expectation_suite_name: sensor_data_suite
+action_list:
+  - name: store_validation_result
+    action:
+      class_name: StoreValidationResultAction
+  - name: update_data_docs
+    action:
+      class_name: UpdateDataDocsAction

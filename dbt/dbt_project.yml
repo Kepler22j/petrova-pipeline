@@ -1,0 +1,37 @@
+name: 'petrova_pipeline'
+version: '1.0.0'
+config-version: 2
+profile: 'petrova_pipeline'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  petrova_pipeline:
+    staging:
+      +materialized: view
+      +schema: bronze
+      +tags: ['bronze', 'staging']
+    intermediate:
+      +materialized: incremental
+      +schema: silver
+      +tags: ['silver', 'intermediate']
+    marts:
+      +materialized: table
+      +schema: gold
+      +tags: ['gold', 'marts']
+
+vars:
+  # Data quality thresholds
+  temp_critical: 150.0
+  pressure_critical: 500.0
+  vibration_critical: 25.0
+  # SCD Type 2
+  scd_effective_date: "current_timestamp()"

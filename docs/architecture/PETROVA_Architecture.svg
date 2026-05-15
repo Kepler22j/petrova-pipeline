@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="1840" viewBox="0 0 680 920" style="font-family:'Segoe UI',Arial,sans-serif;background:#fff">
+<style>
+text{fill:#3d3d3a}
+.th{font-size:14px;font-weight:500}
+.ts{font-size:12px;fill:#73726c}
+.arr{stroke:#73726c;stroke-width:1.5}
+.leader{stroke:#b4b2a9;stroke-width:0.5;stroke-dasharray:3 3}
+/* coral */
+.c-coral rect{fill:#FAECE7;stroke:#993C1D;stroke-width:0.5}
+.c-coral .th{fill:#712B13}.c-coral .ts{fill:#993C1D}
+/* purple */
+.c-purple rect{fill:#EEEDFE;stroke:#534AB7;stroke-width:0.5}
+.c-purple .th{fill:#3C3489}.c-purple .ts{fill:#534AB7}
+/* teal */
+.c-teal rect{fill:#E1F5EE;stroke:#0F6E56;stroke-width:0.5}
+.c-teal .th{fill:#085041}.c-teal .ts{fill:#0F6E56}
+/* blue */
+.c-blue rect{fill:#E6F1FB;stroke:#185FA5;stroke-width:0.5}
+.c-blue .th{fill:#0C447C}.c-blue .ts{fill:#185FA5}
+/* amber */
+.c-amber rect{fill:#FAEEDA;stroke:#854F0B;stroke-width:0.5}
+.c-amber .th{fill:#633806}.c-amber .ts{fill:#854F0B}
+/* pink */
+.c-pink rect{fill:#FBEAF0;stroke:#993556;stroke-width:0.5}
+.c-pink .th{fill:#72243E}.c-pink .ts{fill:#993556}
+/* green */
+.c-green rect{fill:#EAF3DE;stroke:#3B6D11;stroke-width:0.5}
+.c-green .th{fill:#27500A}.c-green .ts{fill:#3B6D11}
+/* gray */
+.c-gray rect{fill:#F1EFE8;stroke:#5F5E5A;stroke-width:0.5}
+.c-gray .th{fill:#444441}.c-gray .ts{fill:#5F5E5A}
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#73726c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<text class="ts" x="340" y="24" text-anchor="middle" opacity="0.5">PETROVA 300K — End-to-End Data Platform Architecture</text>
+
+<text class="th" x="48" y="58">Layer 1: Data sources</text>
+<g class="c-coral"><rect x="40" y="68" width="130" height="44" rx="4"/><text class="th" x="105" y="84" text-anchor="middle" dominant-baseline="central">CSV sensors</text><text class="ts" x="105" y="100" text-anchor="middle" dominant-baseline="central">400K+ rec/day</text></g>
+<g class="c-coral"><rect x="185" y="68" width="130" height="44" rx="4"/><text class="th" x="250" y="84" text-anchor="middle" dominant-baseline="central">SQL Server</text><text class="ts" x="250" y="100" text-anchor="middle" dominant-baseline="central">OLTP watermark</text></g>
+<g class="c-coral"><rect x="330" y="68" width="130" height="44" rx="4"/><text class="th" x="395" y="84" text-anchor="middle" dominant-baseline="central">SAP ERP</text><text class="ts" x="395" y="100" text-anchor="middle" dominant-baseline="central">BODS + Sybase</text></g>
+<g class="c-coral"><rect x="475" y="68" width="130" height="44" rx="4"/><text class="th" x="540" y="84" text-anchor="middle" dominant-baseline="central">REST / IoT</text><text class="ts" x="540" y="100" text-anchor="middle" dominant-baseline="central">Phase 2</text></g>
+
+<line x1="105" y1="112" x2="105" y2="148" class="arr" marker-end="url(#arrow)"/>
+<line x1="250" y1="112" x2="250" y2="148" class="arr" marker-end="url(#arrow)"/>
+<line x1="395" y1="112" x2="395" y2="148" class="arr" marker-end="url(#arrow)"/>
+<line x1="540" y1="112" x2="540" y2="148" class="arr" marker-end="url(#arrow)"/>
+
+<text class="th" x="48" y="148">Layer 2: Extraction &amp; ETL</text>
+<g class="c-purple"><rect x="40" y="158" width="175" height="56" rx="4"/><text class="th" x="128" y="178" text-anchor="middle" dominant-baseline="central">SSIS</text><text class="ts" x="128" y="196" text-anchor="middle" dominant-baseline="central">2 packages + C# validation</text></g>
+<g class="c-purple"><rect x="230" y="158" width="175" height="56" rx="4"/><text class="th" x="318" y="178" text-anchor="middle" dominant-baseline="central">Azure Data Factory</text><text class="ts" x="318" y="196" text-anchor="middle" dominant-baseline="central">CSV to Parquet</text></g>
+<g class="c-purple"><rect x="420" y="158" width="175" height="56" rx="4"/><text class="th" x="508" y="178" text-anchor="middle" dominant-baseline="central">SAP BODS</text><text class="ts" x="508" y="196" text-anchor="middle" dominant-baseline="central">Daily batch 2AM</text></g>
+
+<line x1="128" y1="214" x2="128" y2="256" class="arr" marker-end="url(#arrow)"/>
+<line x1="318" y1="214" x2="318" y2="256" class="arr" marker-end="url(#arrow)"/>
+<line x1="508" y1="214" x2="508" y2="256" class="arr" marker-end="url(#arrow)"/>
+
+<text class="th" x="48" y="248">Layer 3: Medallion architecture</text>
+<g class="c-teal"><rect x="40" y="258" width="595" height="130" rx="12"/><text class="ts" x="338" y="276" text-anchor="middle">Snowflake PETROVA_DW + SQL Server on-prem</text></g>
+<g class="c-gray"><rect x="60" y="290" width="160" height="56" rx="4"/><text class="th" x="140" y="310" text-anchor="middle" dominant-baseline="central">Bronze (raw)</text><text class="ts" x="140" y="328" text-anchor="middle" dominant-baseline="central">5 staging views</text></g>
+<line x1="220" y1="318" x2="252" y2="318" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="ts" x="236" y="308" text-anchor="middle">dbt</text>
+<g class="c-blue"><rect x="256" y="290" width="160" height="56" rx="4"/><text class="th" x="336" y="310" text-anchor="middle" dominant-baseline="central">Silver (clean)</text><text class="ts" x="336" y="328" text-anchor="middle" dominant-baseline="central">6 incremental + SCD2</text></g>
+<line x1="416" y1="318" x2="448" y2="318" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text class="ts" x="432" y="308" text-anchor="middle">dbt</text>
+<g class="c-teal"><rect x="452" y="290" width="164" height="56" rx="4"/><text class="th" x="534" y="310" text-anchor="middle" dominant-baseline="central">Gold (business)</text><text class="ts" x="534" y="328" text-anchor="middle" dominant-baseline="central">4 fact/dim, RBAC</text></g>
+
+<line x1="140" y1="388" x2="140" y2="420" class="arr" marker-end="url(#arrow)"/>
+<line x1="336" y1="388" x2="336" y2="420" class="arr" marker-end="url(#arrow)"/>
+<line x1="534" y1="388" x2="534" y2="420" class="arr" marker-end="url(#arrow)"/>
+
+<text class="th" x="48" y="410">Layer 4: Data quality (3-gate validation)</text>
+<g class="c-amber"><rect x="55" y="420" width="170" height="44" rx="4"/><text class="th" x="140" y="436" text-anchor="middle" dominant-baseline="central">Bronze gate</text><text class="ts" x="140" y="452" text-anchor="middle" dominant-baseline="central">Schema checks</text></g>
+<g class="c-amber"><rect x="246" y="420" width="170" height="44" rx="4"/><text class="th" x="331" y="436" text-anchor="middle" dominant-baseline="central">Silver gate</text><text class="ts" x="331" y="452" text-anchor="middle" dominant-baseline="central">Quality + range</text></g>
+<g class="c-amber"><rect x="437" y="420" width="170" height="44" rx="4"/><text class="th" x="522" y="436" text-anchor="middle" dominant-baseline="central">Gold gate</text><text class="ts" x="522" y="452" text-anchor="middle" dominant-baseline="central">Business + FMEA</text></g>
+<text class="ts" x="338" y="486" text-anchor="middle" opacity="0.6">Great Expectations + dbt tests (40+) + SSIS C# pre-validation</text>
+
+<line x1="338" y1="494" x2="338" y2="530" class="arr" marker-end="url(#arrow)"/>
+
+<text class="th" x="48" y="524">Layer 5: Orchestration</text>
+<g class="c-pink"><rect x="55" y="534" width="170" height="44" rx="4"/><text class="th" x="140" y="550" text-anchor="middle" dominant-baseline="central">Apache Airflow</text><text class="ts" x="140" y="566" text-anchor="middle" dominant-baseline="central">Docker, DAGs, XCom</text></g>
+<g class="c-pink"><rect x="246" y="534" width="170" height="44" rx="4"/><text class="th" x="331" y="550" text-anchor="middle" dominant-baseline="central">ADF pipelines</text><text class="ts" x="331" y="566" text-anchor="middle" dominant-baseline="central">Event triggers</text></g>
+<g class="c-pink"><rect x="437" y="534" width="170" height="44" rx="4"/><text class="th" x="522" y="550" text-anchor="middle" dominant-baseline="central">SSIS Agent</text><text class="ts" x="522" y="566" text-anchor="middle" dominant-baseline="central">Legacy scheduler</text></g>
+
+<line x1="140" y1="578" x2="140" y2="620" class="arr" marker-end="url(#arrow)"/>
+<line x1="331" y1="578" x2="331" y2="620" class="arr" marker-end="url(#arrow)"/>
+<line x1="522" y1="578" x2="460" y2="620" class="arr" marker-end="url(#arrow)"/>
+
+<text class="th" x="48" y="614">Layer 6: Analytics &amp; reporting</text>
+<g class="c-blue"><rect x="40" y="624" width="130" height="44" rx="4"/><text class="th" x="105" y="640" text-anchor="middle" dominant-baseline="central">Power BI</text><text class="ts" x="105" y="656" text-anchor="middle" dominant-baseline="central">8 DAX KPIs</text></g>
+<g class="c-blue"><rect x="185" y="624" width="130" height="44" rx="4"/><text class="th" x="250" y="640" text-anchor="middle" dominant-baseline="central">SSRS</text><text class="ts" x="250" y="656" text-anchor="middle" dominant-baseline="central">VB.NET reports</text></g>
+<g class="c-blue"><rect x="330" y="624" width="130" height="44" rx="4"/><text class="th" x="395" y="640" text-anchor="middle" dominant-baseline="central">Streamlit</text><text class="ts" x="395" y="656" text-anchor="middle" dominant-baseline="central">Snowpark native</text></g>
+<g class="c-blue"><rect x="475" y="624" width="130" height="44" rx="4"/><text class="th" x="540" y="640" text-anchor="middle" dominant-baseline="central">Python ML</text><text class="ts" x="540" y="656" text-anchor="middle" dominant-baseline="central">Phase 3</text></g>
+
+<line x1="105" y1="668" x2="105" y2="702" class="arr" marker-end="url(#arrow)"/>
+<line x1="250" y1="668" x2="250" y2="702" class="arr" marker-end="url(#arrow)"/>
+<line x1="395" y1="668" x2="395" y2="702" class="arr" marker-end="url(#arrow)"/>
+<line x1="540" y1="668" x2="540" y2="702" class="arr" marker-end="url(#arrow)"/>
+
+<text class="th" x="48" y="700">Layer 7: Monitoring &amp; notifications</text>
+<g class="c-green"><rect x="55" y="710" width="170" height="44" rx="4"/><text class="th" x="140" y="726" text-anchor="middle" dominant-baseline="central">Database Mail</text><text class="ts" x="140" y="742" text-anchor="middle" dominant-baseline="central">HTML alerts</text></g>
+<g class="c-green"><rect x="246" y="710" width="170" height="44" rx="4"/><text class="th" x="331" y="726" text-anchor="middle" dominant-baseline="central">Azure Monitor</text><text class="ts" x="331" y="742" text-anchor="middle" dominant-baseline="central">5-min check</text></g>
+<g class="c-green"><rect x="437" y="710" width="170" height="44" rx="4"/><text class="th" x="522" y="726" text-anchor="middle" dominant-baseline="central">PagerDuty</text><text class="ts" x="522" y="742" text-anchor="middle" dominant-baseline="central">30-min escalation</text></g>
+
+<text class="th" x="48" y="784">Layer 8: Security &amp; governance</text>
+<g class="c-gray"><rect x="40" y="794" width="595" height="44" rx="8"/><text class="th" x="338" y="812" text-anchor="middle" dominant-baseline="central">RBAC (4 roles) + Gold 7 commandments + Key Vault + AES-256 + TLS 1.2+</text></g>
+
+<text class="th" x="48" y="862">Layer 9: Archive &amp; retention</text>
+<g class="c-gray"><rect x="40" y="872" width="595" height="34" rx="8"/><text class="ts" x="338" y="892" text-anchor="middle" dominant-baseline="central">ADLS lifecycle (hot &gt; cool &gt; archive) + Snowflake Time Travel 90d + Fail-Safe 7d = 97-day recovery</text></g>
+</svg>

@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+*.egg
+venv/
+.venv/
+env/
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+dbt/profiles.yml
+
+# Airflow
+airflow/logs/
+airflow/*.pid
+airflow/airflow.db
+
+# Great Expectations
+great_expectations/uncommitted/
+great_expectations/great_expectations.yml
+
+# Snowflake credentials
+*.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate*
+terraform/*.tfvars
+
+# Power BI (large binary)
+dashboards/powerbi/*.pbix
+
+# Secrets - NEVER commit
+**/secrets/
+**/credentials/
+**/tokens/
+profiles.yml

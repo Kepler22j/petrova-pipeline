@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw data from PETROVA ingestion pipeline"
+    database: PETROVA_DW
+    schema: PUBLIC
+    tables:
+      - name: sensor_readings_parquet
+        description: "Sensor readings from CSV files via ADF Parquet pipeline"
+        columns:
+          - name: sensor_id
+            description: "Unique sensor identifier (format: SNS-XX-0000)"
+          - name: reading_value
+            description: "Sensor measurement value"
+          - name: reading_timestamp
+            description: "When the reading was taken"
+
+      - name: raw_sap_orders
+        description: "Maintenance orders from SAP ERP via BODS"
+
+      - name: raw_sap_materials
+        description: "Material master data from SAP"
+
+      - name: raw_sap_vendors
+        description: "Vendor master data from SAP"
+
+      - name: raw_equipment_master
+        description: "Equipment registry"

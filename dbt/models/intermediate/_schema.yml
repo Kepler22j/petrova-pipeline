@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: int_sensor_cleaned
+    description: "Silver layer – cleaned & validated sensor readings with quality flags"
+    columns:
+      - name: sensor_reading_sk
+        description: "Surrogate key"
+        tests: [unique, not_null]
+      - name: quality_flag
+        tests:
+          - accepted_values:
+              values: ['PASS', 'WARN', 'FAIL']
+
+  - name: int_orders_validated
+    description: "Silver layer – SAP orders enriched with material data + quality gate"
+    columns:
+      - name: order_sk
+        tests: [unique, not_null]
+      - name: quality_flag
+        tests:
+          - accepted_values:
+              values: ['PASS', 'WARN', 'FAIL']
+
+  - name: scd2_vendors
+    description: "Silver layer – SCD Type 2 vendor dimension (SSIS Lookup pattern)"
+    columns:
+      - name: vendor_sk
+        tests: [unique, not_null]
+      - name: is_current
+        tests: [not_null]
+
+  - name: int_equipment_enriched
+    description: "Silver layer – equipment master with lifecycle derivations"
+    columns:
+      - name: equipment_sk
+        tests: [unique, not_null]

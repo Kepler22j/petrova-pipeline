@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: stg_sensor_readings
+    description: "Bronze layer: raw sensor readings exactly as ingested"
+    columns:
+      - name: sensor_id
+        description: "Unique sensor identifier"
+        tests:
+          - not_null
+      - name: reading_value
+        description: "Sensor measurement value"
+        tests:
+          - not_null
+      - name: reading_timestamp
+        description: "Timestamp of the reading"
+        tests:
+          - not_null
+
+  - name: stg_sap_orders
+    description: "Bronze layer: raw SAP maintenance orders"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_sap_materials
+    description: "Bronze layer: raw SAP material master"
+    columns:
+      - name: material_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_sap_vendors
+    description: "Bronze layer: raw SAP vendor master"
+    columns:
+      - name: vendor_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_equipment_master
+    description: "Bronze layer: equipment registry"
+    columns:
+      - name: equipment_id
+        tests:
+          - not_null
+          - unique

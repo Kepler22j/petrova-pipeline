@@ -1,0 +1,55 @@
+{
+  "expectation_suite_name": "sensor_data_suite",
+  "ge_cloud_id": null,
+  "data_asset_type": "Dataset",
+  "meta": {
+    "petrova_layer": "bronze",
+    "gate": "bronze_gate",
+    "description": "Schema + completeness validation for raw sensor readings"
+  },
+  "expectations": [
+    {
+      "expectation_type": "expect_table_columns_to_match_set",
+      "kwargs": {
+        "column_set": [
+          "sensor_id", "sensor_name", "equipment_name",
+          "reading_value", "reading_timestamp", "status",
+          "process_area", "_loaded_at"
+        ],
+        "exact_match": false
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "sensor_id" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "reading_timestamp" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "reading_value",
+        "min_value": -9999,
+        "max_value": 99999,
+        "mostly": 0.95
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "status",
+        "value_set": ["ACTIVE", "INACTIVE", "MAINTENANCE", "ERROR"],
+        "mostly": 0.99
+      }
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": {
+        "min_value": 1,
+        "max_value": 10000000
+      }
+    }
+  ]
+}

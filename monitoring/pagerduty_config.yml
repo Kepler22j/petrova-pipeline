@@ -1,0 +1,32 @@
+# PETROVA 300K – PagerDuty Integration Config
+# Referenced by Airflow DAG for on-call alerting
+
+service:
+  name: PETROVA Pipeline
+  escalation_policy: petrova-data-engineering
+
+alerts:
+  bronze_gate_failure:
+    severity: warning
+    summary: "Bronze Gate validation failed – schema mismatch detected"
+    routing_key: ${PAGERDUTY_ROUTING_KEY}
+
+  silver_gate_failure:
+    severity: error
+    summary: "Silver Gate quality check failed – data quality below threshold"
+    routing_key: ${PAGERDUTY_ROUTING_KEY}
+
+  gold_gate_fmea_block:
+    severity: critical
+    summary: "Gold Gate FMEA BLOCKED – Risk Priority Number exceeds threshold"
+    routing_key: ${PAGERDUTY_ROUTING_KEY}
+
+  pipeline_timeout:
+    severity: error
+    summary: "Pipeline exceeded max execution time (SLA breach)"
+    routing_key: ${PAGERDUTY_ROUTING_KEY}
+
+  snowpipe_lag:
+    severity: warning
+    summary: "Snowpipe ingestion lag > 30 minutes"
+    routing_key: ${PAGERDUTY_ROUTING_KEY}
