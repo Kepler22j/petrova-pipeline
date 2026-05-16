@@ -1,0 +1,7 @@
+gate_name,metric,threshold_min,threshold_max,severity
+bronze_gate,null_rate,0,0.05,FAIL
+bronze_gate,schema_match,1.0,1.0,FAIL
+silver_gate,quality_score,0.95,1.0,WARN
+silver_gate,duplicate_rate,0,0.01,FAIL
+gold_gate,fmea_rpn,0,100,BLOCK
+gold_gate,completeness,0.99,1.0,WARN

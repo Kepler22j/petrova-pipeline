@@ -1,0 +1,6 @@
+status_code,status_name,is_operational,description
+ACTIVE,Active,true,Sensor operating normally
+INACTIVE,Inactive,false,Sensor powered off
+MAINTENANCE,Under Maintenance,false,Scheduled maintenance window
+ERROR,Error State,false,Sensor reporting errors
+DECOMMISSIONED,Decommissioned,false,Permanently retired

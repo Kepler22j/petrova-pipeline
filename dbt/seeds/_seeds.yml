@@ -1,0 +1,22 @@
+version: 2
+
+seeds:
+  - name: quality_thresholds
+    description: "Reference data for 3-Gate validation thresholds"
+    config:
+      schema: bronze
+    columns:
+      - name: gate_name
+        tests: [not_null]
+      - name: severity
+        tests:
+          - accepted_values:
+              values: ['FAIL', 'WARN', 'BLOCK']
+
+  - name: sensor_status_codes
+    description: "Lookup table for sensor status codes"
+    config:
+      schema: bronze
+    columns:
+      - name: status_code
+        tests: [unique, not_null]

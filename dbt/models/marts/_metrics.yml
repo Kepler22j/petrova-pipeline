@@ -1,0 +1,30 @@
+version: 2
+
+metrics:
+  - name: daily_avg_sensor_reading
+    label: "Daily Average Sensor Reading"
+    description: "Average sensor reading value per day across all sensors"
+    type: derived
+    type_params:
+      expr: "AVG(avg_reading)"
+      metrics:
+        - name: avg_reading
+    filter: "quality_flag IN ('PASS', 'WARN')"
+
+  - name: total_daily_revenue
+    label: "Total Daily Revenue"
+    description: "Sum of revenue from validated SAP orders per day"
+    type: simple
+    type_params:
+      measure: total_revenue
+    time_grains: [day, week, month, quarter, year]
+
+  - name: pipeline_quality_score
+    label: "Pipeline Quality Score"
+    description: "Percentage of records passing Silver Gate validation"
+    type: derived
+    type_params:
+      expr: "CAST(pass_count AS FLOAT) / NULLIF(total_count, 0) * 100"
+      metrics:
+        - name: pass_count
+        - name: total_count

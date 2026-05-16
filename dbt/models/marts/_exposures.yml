@@ -1,0 +1,52 @@
+version: 2
+
+exposures:
+  - name: petrova_ops_dashboard
+    type: dashboard
+    description: "Streamlit operations dashboard showing pipeline health, sensor KPIs, and data quality"
+    maturity: high
+    url: "http://localhost:8501"
+    depends_on:
+      - ref('fct_daily_sensor_kpi')
+      - ref('fct_daily_revenue')
+      - ref('dim_equipment')
+    owner:
+      name: Jay Pechnarai
+      email: pechnarai.jakapong@gmail.com
+
+  - name: power_bi_executive_report
+    type: dashboard
+    description: "Power BI executive summary with revenue trends and equipment status"
+    maturity: medium
+    url: "https://app.powerbi.com/petrova"
+    depends_on:
+      - ref('fct_daily_revenue')
+      - ref('dim_vendor')
+      - ref('dim_equipment')
+    owner:
+      name: Jay Pechnarai
+      email: pechnarai.jakapong@gmail.com
+
+  - name: ssrs_weekly_quality_report
+    type: analysis
+    description: "SSRS weekly data quality scorecard emailed to stakeholders"
+    maturity: low
+    depends_on:
+      - ref('fct_daily_sensor_kpi')
+    owner:
+      name: Jay Pechnarai
+      email: pechnarai.jakapong@gmail.com
+
+  - name: airflow_pipeline
+    type: application
+    description: "Apache Airflow DAG orchestrating the Bronze → Silver → Gold pipeline"
+    maturity: high
+    url: "http://localhost:8080/dags/petrova_validated_pipeline"
+    depends_on:
+      - ref('stg_sensor_readings')
+      - ref('stg_sap_orders')
+      - ref('int_sensor_cleaned')
+      - ref('fct_daily_sensor_kpi')
+    owner:
+      name: Jay Pechnarai
+      email: pechnarai.jakapong@gmail.com

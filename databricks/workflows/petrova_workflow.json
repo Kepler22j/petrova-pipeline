@@ -1,0 +1,56 @@
+{
+  "name": "PETROVA_Daily_Pipeline",
+  "description": "Multi-task workflow: Bronze → Silver → Gold with DLT and notebooks",
+  "email_notifications": {
+    "on_failure": ["alerts@petrova.local"]
+  },
+  "schedule": {
+    "quartz_cron_expression": "0 0 2 * * ?",
+    "timezone_id": "UTC"
+  },
+  "max_concurrent_runs": 1,
+  "tasks": [
+    {
+      "task_key": "bronze_ingest",
+      "description": "Ingest raw data to Bronze via Auto Loader",
+      "notebook_task": {
+        "notebook_path": "/Repos/petrova/databricks/notebooks/01_bronze_ingest"
+      },
+      "new_cluster": {
+        "spark_version": "14.3.x-scala2.12",
+        "node_type_id": "Standard_DS3_v2",
+        "num_workers": 2,
+        "spark_conf": {
+          "spark.databricks.delta.optimizeWrite.enabled": "true",
+          "spark.databricks.delta.autoCompact.enabled": "true"
+        }
+      }
+    },
+    {
+      "task_key": "dlt_pipeline",
+      "description": "Run DLT pipeline for Silver + Gold transforms",
+      "depends_on": [{"task_key": "bronze_ingest"}],
+      "pipeline_task": {
+        "pipeline_id": "PETROVA_DLT_PIPELINE_ID"
+      }
+    },
+    {
+      "task_key": "dbt_test",
+      "description": "Run dbt tests for data quality validation",
+      "depends_on": [{"task_key": "dlt_pipeline"}],
+      "notebook_task": {
+        "notebook_path": "/Repos/petrova/databricks/notebooks/run_dbt_tests"
+      },
+      "existing_cluster_id": "PETROVA_SHARED_CLUSTER_ID"
+    },
+    {
+      "task_key": "notify_success",
+      "description": "Send success notification",
+      "depends_on": [{"task_key": "dbt_test"}],
+      "notebook_task": {
+        "notebook_path": "/Repos/petrova/databricks/notebooks/notify"
+      },
+      "existing_cluster_id": "PETROVA_SHARED_CLUSTER_ID"
+    }
+  ]
+}

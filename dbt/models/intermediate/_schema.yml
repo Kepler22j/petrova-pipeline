@@ -2,12 +2,13 @@ version: 2
 
 models:
   - name: int_sensor_cleaned
-    description: "Silver layer – cleaned & validated sensor readings with quality flags"
+    description: '{{ doc("petrova_overview") }}'
     columns:
       - name: sensor_reading_sk
-        description: "Surrogate key"
+        description: '{{ doc("sensor_reading_sk") }}'
         tests: [unique, not_null]
       - name: quality_flag
+        description: '{{ doc("quality_flag") }}'
         tests:
           - accepted_values:
               values: ['PASS', 'WARN', 'FAIL']
@@ -18,6 +19,7 @@ models:
       - name: order_sk
         tests: [unique, not_null]
       - name: quality_flag
+        description: '{{ doc("quality_flag") }}'
         tests:
           - accepted_values:
               values: ['PASS', 'WARN', 'FAIL']
@@ -28,6 +30,7 @@ models:
       - name: vendor_sk
         tests: [unique, not_null]
       - name: is_current
+        description: '{{ doc("is_current") }}'
         tests: [not_null]
 
   - name: int_equipment_enriched
@@ -35,3 +38,6 @@ models:
     columns:
       - name: equipment_sk
         tests: [unique, not_null]
+
+  - name: int_order_line_items
+    description: "Ephemeral model – unit price calculation, compiled as CTE"
