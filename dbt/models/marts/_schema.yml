@@ -33,6 +33,34 @@ models:
       - name: vendor_sk
         tests: [unique, not_null]
 
+  - name: fct_sensor_alerts
+    description: "Gold – SPC alert engine. 6 alert categories from 3 primitives (STDDEV, LAG, THRESHOLD). Composite severity: CRITICAL/WARNING/OK."
+    columns:
+      - name: alert_sk
+        tests: [unique, not_null]
+      - name: sensor_id
+        tests: [not_null]
+      - name: alert_severity
+        tests:
+          - accepted_values:
+              values: ['CRITICAL', 'WARNING', 'OK']
+      - name: stability_level
+        tests:
+          - accepted_values:
+              values: ['STABLE', 'NORMAL', 'UNSTABLE', 'INSUFFICIENT_DATA']
+      - name: signal_quality
+        tests:
+          - accepted_values:
+              values: ['CLEAN', 'NOISY', 'VERY_NOISY', 'INVALID']
+      - name: volatility_trend
+        tests:
+          - accepted_values:
+              values: ['STEADY', 'IMPROVING', 'INCREASING', 'DEGRADING', 'NO_HISTORY']
+      - name: spike_status
+        tests:
+          - accepted_values:
+              values: ['NORMAL', 'SHIFT', 'SPIKE', 'NO_HISTORY']
+
   - name: dim_customer
     description: "Gold – Customer dimension (placeholder for SAP integration)."
     columns:
