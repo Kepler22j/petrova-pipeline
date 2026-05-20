@@ -1,5 +1,5 @@
 # ============================================================
-# PETROVA 300K – Terraform Infrastructure
+# PETROVA – Terraform Infrastructure
 # Manages: Azure resources + Snowflake objects
 # ============================================================
 
@@ -91,7 +91,7 @@ resource "azurerm_key_vault" "petrova" {
 
 resource "snowflake_database" "prod" {
   name    = "PETROVA_PROD"
-  comment = "PETROVA 300K production database"
+  comment = "PETROVA production database"
 }
 
 resource "snowflake_schema" "bronze" {

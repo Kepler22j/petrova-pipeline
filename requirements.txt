@@ -1,4 +1,4 @@
-# PETROVA 300K — Python Dependencies
+# PETROVA — Python Dependencies
 # Install: pip install -r requirements.txt
 
 # ── Compute Engine ──

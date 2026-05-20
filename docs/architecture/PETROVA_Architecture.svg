@@ -52,7 +52,7 @@ text{fill:#3d3d3a}
 </defs>
 
 <!-- ═══ TITLE ═══ -->
-<text x="375" y="22" text-anchor="middle" font-size="16" font-weight="600" fill="#1B3A5C">PETROVA 300K — End-to-End Hybrid Cloud Architecture</text>
+<text x="375" y="22" text-anchor="middle" font-size="16" font-weight="600" fill="#1B3A5C">PETROVA — End-to-End Hybrid Cloud Architecture</text>
 <text class="ts" x="375" y="38" text-anchor="middle" opacity="0.6">PySpark 3.5.3 + Delta Lake 3.2.1 + Snowflake + Databricks + Airflow 2.9.3 + dbt 1.8.7</text>
 
 <!-- ═══ LEGEND ═══ -->

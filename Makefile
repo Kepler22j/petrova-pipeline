@@ -1,4 +1,4 @@
-# PETROVA 300K — Developer Commands
+# PETROVA — Developer Commands
 # Usage: make <target>
 
 .PHONY: help setup lint test dbt-run dbt-test docker-up docker-down clean

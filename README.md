@@ -2,7 +2,7 @@
 
 # PETROVA
 
-### Production-Grade Data Platform with Spark, Databricks, dbt, Snowflake & Real-Time Monitoring (400K+ Records/Day)
+### Production-Grade Data Platform with Spark, Databricks, dbt, Snowflake, Airflow & Streamlit Real-Time Dashboard (400K+ Records/Day)
 
 [![CI](https://github.com/Kepler22j/petrova-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Kepler22j/petrova-pipeline/actions)
 [![dbt](https://img.shields.io/badge/dbt-1.8.7-FF694B?logo=dbt)](https://www.getdbt.com/)

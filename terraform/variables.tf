@@ -1,5 +1,5 @@
 # ============================================================
-# PETROVA 300K – Terraform Variables
+# PETROVA – Terraform Variables
 # ============================================================
 
 variable "environment" {

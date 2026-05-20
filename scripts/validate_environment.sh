@@ -18,7 +18,7 @@ warn() { echo -e "${YELLOW}!${NC} $1"; }
 ERRORS=0
 
 echo "═══════════════════════════════════════════"
-echo "  PETROVA 300K – Environment Validation"
+echo "  PETROVA – Environment Validation"
 echo "═══════════════════════════════════════════"
 echo ""
 

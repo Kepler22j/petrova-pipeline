@@ -1,5 +1,5 @@
 """
-PETROVA 300K — Validated Data Pipeline DAG
+PETROVA — Validated Data Pipeline DAG
 Triple-Orchestration: Airflow + ADF + dbt
 3-Gate Validation: Bronze Gate → Silver Gate → Gold Gate (FMEA)
 """
@@ -67,7 +67,7 @@ def gold_gate_fmea_check(**context):
 with DAG(
     dag_id='petrova_validated_pipeline',
     default_args=default_args,
-    description='PETROVA 300K end-to-end pipeline with 3-Gate Validation',
+    description='PETROVA end-to-end pipeline with 3-Gate Validation',
     schedule_interval='0 6 * * *',  # Daily at 6 AM UTC
     catchup=False,
     max_active_runs=1,
