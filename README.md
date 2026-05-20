@@ -4,14 +4,15 @@
 
 ### Hybrid Cloud Data Platform — Production-Grade Portfolio
 
-[![CI](https://github.com/YOUR_USERNAME/petrova-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/petrova-pipeline/actions)
-[![dbt](https://img.shields.io/badge/dbt-1.7+-FF694B?logo=dbt)](https://www.getdbt.com/)
+[![CI](https://github.com/Kepler22j/petrova-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Kepler22j/petrova-pipeline/actions)
+[![dbt](https://img.shields.io/badge/dbt-1.8.7-FF694B?logo=dbt)](https://www.getdbt.com/)
 [![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?logo=snowflake&logoColor=white)](https://www.snowflake.com/)
 [![Databricks](https://img.shields.io/badge/Databricks-FF3621?logo=databricks&logoColor=white)](https://www.databricks.com/)
 [![Airflow](https://img.shields.io/badge/Airflow-017CEE?logo=apacheairflow&logoColor=white)](https://airflow.apache.org/)
 [![Terraform](https://img.shields.io/badge/Terraform-844FBA?logo=terraform&logoColor=white)](https://www.terraform.io/)
 
-**9 Architecture Layers · 24 Pipeline Steps · 25+ Technologies · 3-Gate Validation**
+**10 Architecture Layers · 10 Silver Cleaning Logics · 3-Gate Validation · Traffic-Light Priority**
+**16 dbt Models · 3 Fact Tables · AWS Security Specialty · Triple Certification**
 
 [Architecture](#architecture) · [Quick Start](#quick-start) · [Medallion Layers](#medallion-architecture) · [Key Features](#key-features) · [Tech Stack](#tech-stack)
 
@@ -23,7 +24,20 @@
 
 PETROVA 300K is a **hybrid cloud data platform** that bridges on-premises legacy systems (SAP, SSIS, SQL Server) with modern cloud services (Snowflake, Databricks, Azure Data Factory). It implements a **Medallion Architecture** with enterprise-grade data quality gates, SCD Type 2 history tracking, and FMEA-based risk validation.
 
-This project demonstrates end-to-end data engineering at the scale and rigor expected in **$300K+ senior/staff data engineering roles**.
+This project demonstrates end-to-end data engineering at the scale and rigor expected in **$300K+ senior/staff data engineering roles**. Built with a **security-first mindset** (RBAC, AES-256, TLS 1.2+, Key Vault, Unity Catalog) and **SRE operational discipline** (1,200+ alert policies, Golden Signals, 99.5% SLA).
+
+## Security Posture
+
+| Layer | Control | Standard |
+|-------|---------|----------|
+| **Network** | TLS 1.2+ everywhere, VPN for on-prem, DMZ ingress | ISO 27001 aligned |
+| **Authentication** | LDAP/SSO, Azure AD, Snowflake key-pair auth | Zero-trust |
+| **Encryption** | AES-256 at rest, TLS in transit, Key Vault for secrets | FIPS 140-2 |
+| **Authorization** | 4-role RBAC hierarchy, Unity Catalog fine-grained ACL | Least privilege |
+| **Data Protection** | Dynamic data masking, Gold immutability (7 Commandments) | PCI-DSS aligned |
+| **Audit** | Pipeline run logging, DESCRIBE HISTORY, Time Travel 90d | SOX-ready |
+| **DevSecOps** | CI security scanning (SQLFluff, SonarQube), PR review gates | Shift-left |
+| **Disaster Recovery** | ADLS lifecycle (hot→cool→archive), Fail-Safe 7d, Zero-Copy Clone | RPO < 1hr |
 
 ## Architecture
 
@@ -46,7 +60,8 @@ This project demonstrates end-to-end data engineering at the scale and rigor exp
 │  │ Alerts   │   │ Streamlit│   │  Metrics  │   │  FMEA ✓  │    │
 │  └──────────┘   └──────────┘   └──────────┘   └──────────┘    │
 │                                                                  │
-│  ORCHESTRATION: Airflow (Cloud) + ADF (Azure) + SSIS (On-Prem) │
+│  ORCHESTRATION: Airflow 2.9.3 + ADF (Azure) + SSIS (On-Prem)   │
+│  COMPUTE: PySpark 3.5.3 + Delta Lake 3.2.1                     │
 │  INFRASTRUCTURE: Terraform · GitHub Actions CI/CD               │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -59,7 +74,7 @@ This project demonstrates end-to-end data engineering at the scale and rigor exp
 
 ```bash
 # 1. Clone
-git clone https://github.com/YOUR_USERNAME/petrova-pipeline.git
+git clone https://github.com/Kepler22j/petrova-pipeline.git
 cd petrova-pipeline
 
 # 2. Environment setup
@@ -83,10 +98,23 @@ dbt run --select tag:silver --target dev --profiles-dir .
 dbt run --select tag:gold   --target dev --profiles-dir .
 dbt test --target dev --profiles-dir .
 
-# 7. Start Airflow (local dev)
-cd ../airflow && docker-compose up -d
+# 7. Start Airflow + PySpark + Jupyter (local dev)
+cd ../airflow
+docker compose build --no-cache
+docker compose up airflow-init    # Wait for "Airflow init complete!"
+docker compose up -d              # Start all services
 
-# 8. Launch Streamlit dashboard
+# 8. Access services
+# Airflow UI:    http://localhost:8080 (admin/admin)
+# Jupyter Lab:   http://localhost:8888 (token: petrova)
+# Spark UI:      http://localhost:4040 (when job runs)
+# PostgreSQL:    localhost:5432
+
+# 9. Run PySpark Delta Lab
+# Open Jupyter → notebooks/00_local_delta_lab.ipynb
+# Run all cells: Bronze → Silver → Gold with Delta Lake
+
+# 10. Launch Streamlit dashboard
 cd ../dashboards/streamlit && streamlit run app.py
 ```
 
@@ -99,18 +127,34 @@ cd ../dashboards/streamlit && streamlit run app.py
 - **Models**: `stg_sensor_readings`, `stg_sap_orders`, `stg_sap_materials`, `stg_sap_vendors`, `stg_equipment_master`
 - **Location**: `dbt/models/staging/`
 
-### Silver Layer (Cleaned / SCD2)
-- **Purpose**: Clean, validate, enrich, and historize data
+### Silver Layer (Cleaned / SCD2) — 10 Cleaning Logics
+- **Purpose**: Clean, validate, enrich, and historize data using **10 structured cleaning logics**
 - **Key Pattern**: SCD Type 2 via SSIS Lookup + Snowflake MERGE
 - **Validation**: Silver Gate — statistical quality rules (dbt_expectations + Great Expectations)
-- **Models**: `int_sensor_cleaned`, `int_orders_validated`, `scd2_vendors`, `int_equipment_enriched`
+- **Models**: `int_sensor_cleaned`, `int_orders_validated`, `scd2_vendors`, `int_equipment_enriched`, `int_order_line_items`
 - **Location**: `dbt/models/intermediate/`
+
+**10 Silver Cleaning Logics (3-Gate Framework):**
+
+| Gate | Logic | Name | Implementation |
+|------|-------|------|----------------|
+| Gate 1: Schema | 1 | Null Detection & Flagging | `isNull()` → quality_flag = FAIL |
+| Gate 1: Schema | 2 | Data Type Casting | `cast()`, StructType enforcement |
+| Gate 1: Schema | 3 | Range Validation | `BETWEEN` checks, physical limits |
+| Gate 2: Business | 4 | Status Filtering | Remove INACTIVE equipment |
+| Gate 2: Business | 5 | Deduplication | `ROW_NUMBER() OVER(PARTITION BY...)` |
+| Gate 2: Business | 6 | Derived Columns | `reading_date`, `reading_hour`, lifecycle_stage |
+| Gate 2: Business | 7 | SCD Type 2 Merge | `row_hash`, `is_current`, `valid_from/to` |
+| Gate 3: Cross-Table | 8 | Referential Integrity | JOIN checks against master data |
+| Gate 3: Cross-Table | 9 | Aggregation Guards | HAVING / COUNT checks |
+| Gate 3: Cross-Table | 10 | Late-Arriving Data | Watermark-based windowing |
 
 ### Gold Layer (Business-Ready / Immutable)
 - **Purpose**: Aggregated KPIs and dimensions for BI consumption
 - **Protection**: 7 Gold Immutability Commandments + 4-role RBAC
 - **Validation**: Gold Gate — FMEA risk scoring (blocks if RPN > threshold)
-- **Models**: `fct_daily_sensor_kpi`, `fct_daily_revenue`, `dim_equipment`, `dim_vendor`, `dim_customer`
+- **Models**: `fct_daily_sensor_kpi`, `fct_daily_revenue`, `fct_sensor_alerts`, `dim_equipment`, `dim_vendor`, `dim_customer`
+- **Alert Engine**: `fct_sensor_alerts` — 6 alert categories from 3 statistical primitives (STDDEV, LAG, THRESHOLD) with composite severity scoring (CRITICAL/WARNING/OK)
 - **Location**: `dbt/models/marts/`
 
 ## Key Features
@@ -163,7 +207,8 @@ Full history tracking for slowly changing dimensions:
 | **IaC** | Terraform (Azure + Snowflake providers) |
 | **CI/CD** | GitHub Actions (SQLFluff, dbt compile, Terraform validate) |
 | **Monitoring** | PagerDuty, Azure Monitor, Snowflake email integration |
-| **Security** | RBAC (4-role hierarchy), Azure Key Vault, Gold Immutability |
+| **Security** | RBAC (4-role hierarchy), Azure Key Vault, AES-256, TLS 1.2+, Unity Catalog |
+| **Python Libraries** | pyspark, delta-spark, dbt-core, great-expectations, pandas, pyarrow, snowflake-connector-python, pyodbc, sqlalchemy, requests, jinja2 |
 
 ## Project Structure
 
@@ -171,18 +216,25 @@ Full history tracking for slowly changing dimensions:
 petrova-pipeline/
 ├── .github/workflows/      # CI/CD (lint, dbt test, terraform validate)
 ├── adf/                    # Azure Data Factory pipeline & linked service JSON
-├── airflow/                # Airflow DAG, docker-compose, config
-│   └── dags/               #   petrova_validated_pipeline.py
+├── airflow/                # Dockerized orchestration stack
+│   ├── dags/               #   petrova_validated_pipeline.py
+│   ├── docker-compose.yml  #   Airflow + Jupyter-Spark + PostgreSQL
+│   └── Dockerfile          #   Custom image (PySpark 3.5.3 + dbt + Delta)
 ├── dashboards/             # Visualization layer
 │   ├── streamlit/          #   Real-time ops dashboard (app.py)
 │   ├── powerbi/            #   Power BI connection guide
 │   └── ssrs/               #   SSRS scheduled reports
+├── databricks/             # Databricks notebooks & pipelines
+│   ├── notebooks/          #   00_local_delta_lab, 01_bronze_ingest, 02_streaming, 03_delta_optimization
+│   ├── dlt/                #   Delta Live Tables pipeline
+│   ├── unity_catalog/      #   Unity Catalog governance setup
+│   └── workflows/          #   Databricks Workflow JSON configs
 ├── dbt/                    # dbt-core project
 │   ├── macros/             #   generate_schema_name, audit, scd2_merge, 3-gate
 │   ├── models/
 │   │   ├── staging/        #   Bronze (5 models + sources + schema tests)
 │   │   ├── intermediate/   #   Silver (4 models + SCD2 + schema tests)
-│   │   └── marts/          #   Gold (5 models + schema tests)
+│   │   └── marts/          #   Gold (6 models: 3 facts + 3 dims + schema tests)
 │   └── packages.yml        #   dbt_utils, dbt_expectations, codegen
 ├── docs/
 │   ├── architecture/       #   SVG architecture diagram
@@ -225,6 +277,21 @@ PETROVA_ADMIN          ← Full access, DDL, procedure management
 | Pipeline timeout | Error | PagerDuty |
 | Snowpipe lag > 30min | Warning | PagerDuty |
 
+### Statistical Alert Engine (`fct_sensor_alerts`)
+6 alert categories derived from 3 statistical primitives (SPC — Statistical Process Control):
+
+| Alert | Primitive | Logic | Threshold |
+|-------|-----------|-------|-----------|
+| Stability Level | STDDEV | stddev bands | < 5 STABLE, 5-25 NORMAL, > 25 UNSTABLE |
+| Signal Quality | STDDEV/AVG | Coefficient of Variation | CV > 0.3 = NOISY, > 0.5 = VERY_NOISY |
+| Outlier Detection | STDDEV | 2σ rule | max > avg + 2×stddev |
+| Range Violation | STDDEV | 1σ expected band | outside avg ± 1×stddev |
+| Volatility Trend | LAG(STDDEV) | Day-over-day stddev change | > 1.5× previous = DEGRADING |
+| Spike Detection | LAG(MAX) | Sudden jump detection | delta > 2×stddev = SPIKE |
+
+**Composite Severity**: CRITICAL (multiple triggers) → WARNING (single trigger) → OK (clean)
+**Routing**: CRITICAL → PagerDuty 30min escalation · WARNING → Email · OK → Dashboard only
+
 ## Development
 
 ```bash
@@ -247,6 +314,33 @@ pytest tests/e2e/ -v
 cd terraform && terraform plan -var="environment=dev"
 ```
 
+## Local Dev Stack (Docker)
+
+The project includes a complete local development environment via Docker Compose:
+
+| Service | Image | Port | Purpose |
+|---------|-------|------|---------|
+| PostgreSQL 15 | `postgres:15-alpine` | 5432 | Airflow metadata |
+| Airflow Webserver | Custom (apache/airflow:2.9.3) | 8080 | DAG management UI |
+| Airflow Scheduler | Custom (apache/airflow:2.9.3) | - | Task execution |
+| Jupyter + PySpark | `quay.io/jupyter/pyspark-notebook:spark-3.5.3` | 8888 / 4040 | Delta Lake notebook dev |
+
+Jupyter serves as a **mini CI/CD gate**: develop and test PySpark + Delta Lake locally, then push to Git for Databricks production deployment.
+
+## Certification Alignment
+
+Every component maps to at least one exam domain:
+
+| Component | Databricks DE Associate | SnowPro Core (COF-C03) | dbt Analytics Engineer |
+|-----------|------------------------|----------------------|----------------------|
+| Auto Loader / COPY INTO | Ingestion patterns | Data loading | - |
+| Delta MERGE / SCD2 | Delta operations | - | Incremental models |
+| Structured Streaming | Streaming concepts | Snowpipe | - |
+| Window Functions | DataFrame API | SQL windows | SQL patterns |
+| Medallion Architecture | Best practices | Data architecture | Model layers |
+| Unity Catalog | Governance | RBAC / Secure Views | - |
+| dbt Models & Tests | - | - | Full coverage |
+
 ## License
 
 This project is a portfolio demonstration. All code is original work by **Jay Pechnarai (Jakapong Pechnarai)**.
@@ -255,5 +349,6 @@ This project is a portfolio demonstration. All code is original work by **Jay Pe
 
 <div align="center">
 <strong>Built for $300K+ Data Engineering roles</strong><br>
-<em>9 Layers · 24 Steps · 25+ Technologies · Zero Compromise</em>
+<em>10 Layers · 10 Silver Logics · 16 dbt Models · 3 Fact Tables · Security-First · Zero Compromise</em><br>
+<em>By Jay Pechnarai — Senior Data Platform Engineer / SRE · 15+ Years Mission-Critical Systems</em>
 </div>

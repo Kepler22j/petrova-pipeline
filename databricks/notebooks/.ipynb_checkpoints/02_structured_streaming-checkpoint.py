@@ -10,8 +10,6 @@
 
 # COMMAND ----------
 
-from pyspark.sql import functions as F
-
 # Read stream from Delta table (exam topic: Delta as streaming source)
 stream_df = (spark.readStream
     .format("delta")
@@ -33,6 +31,8 @@ processed = (stream_df
 # MAGIC ## 2. Trigger Modes (exam topic)
 
 # COMMAND ----------
+
+from pyspark.sql import functions as F
 
 # Trigger: availableNow (process all available, then stop – replaces trigger once)
 query1 = (processed.writeStream
