@@ -1,8 +1,8 @@
-# PETROVA 300K – Interview Talking Points
+# PETROVA – Interview Talking Points
 
 ## Elevator Pitch (30 seconds)
 
-"I built PETROVA 300K, a hybrid cloud data platform that bridges on-premises SAP/SSIS systems with modern cloud — Snowflake, Databricks, and Azure Data Factory. It features a Medallion Architecture with 3-gate validation across 10 silver cleaning logics, an SPC-based statistical alert engine, SCD Type 2 tracking, and traffic-light priority routing — processing 24 pipeline steps across 10 architecture layers with enterprise-grade security."
+"I built PETROVA, a hybrid cloud data platform that bridges on-premises SAP/SSIS systems with modern cloud — Snowflake, Databricks, and Azure Data Factory. It features a Medallion Architecture with 3-gate validation across 10 silver cleaning logics, an SPC-based statistical alert engine, SCD Type 2 tracking, and traffic-light priority routing — processing 24 pipeline steps across 10 architecture layers with enterprise-grade security."
 
 ## Key Differentiators
 

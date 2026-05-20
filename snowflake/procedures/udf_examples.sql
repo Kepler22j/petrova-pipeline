@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – UDFs & Stored Procedures (SnowPro Core Exam)
+-- PETROVA – UDFs & Stored Procedures (SnowPro Core Exam)
 -- Topics: SQL UDF, JavaScript UDF, Python UDF, UDTF, Secure UDF
 -- ============================================================
 USE DATABASE PETROVA_PROD;

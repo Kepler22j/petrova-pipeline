@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # PETROVA 300K – Delta Live Tables Pipeline (Databricks DE Associate Exam)
+# MAGIC # PETROVA – Delta Live Tables Pipeline (Databricks DE Associate Exam)
 # MAGIC Topics: @dlt.table, @dlt.view, expectations, Medallion in DLT
 
 # COMMAND ----------

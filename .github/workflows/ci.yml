@@ -1,4 +1,4 @@
-# PETROVA 300K – CI Pipeline
+# PETROVA – CI Pipeline
 name: PETROVA CI
 
 on:

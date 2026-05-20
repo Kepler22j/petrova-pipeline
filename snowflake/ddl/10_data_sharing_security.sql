@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – Data Sharing & Security (SnowPro Core Exam)
+-- PETROVA – Data Sharing & Security (SnowPro Core Exam)
 -- Topics: Secure Shares, Reader Accounts, Network Policies,
 --         Row Access Policies, Masking Policies, Encryption
 -- ============================================================

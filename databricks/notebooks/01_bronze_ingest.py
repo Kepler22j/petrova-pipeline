@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # PETROVA 300K – Bronze Ingestion (Databricks DE Associate Exam)
+# MAGIC # PETROVA – Bronze Ingestion (Databricks DE Associate Exam)
 # MAGIC Topics: Auto Loader, COPY INTO, Spark DataFrame API, Schema Evolution
 
 # COMMAND ----------

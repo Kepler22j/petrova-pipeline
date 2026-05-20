@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – Unity Catalog Setup (Databricks DE Associate Exam)
+-- PETROVA – Unity Catalog Setup (Databricks DE Associate Exam)
 -- Topics: Catalog, Schema, Managed/External tables, Grants, Lineage
 -- ============================================================
 

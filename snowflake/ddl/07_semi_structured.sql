@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – Semi-Structured Data (SnowPro Core Exam)
+-- PETROVA – Semi-Structured Data (SnowPro Core Exam)
 -- Topics: VARIANT, OBJECT, ARRAY, FLATTEN, LATERAL, PARSE_JSON
 -- ============================================================
 USE DATABASE PETROVA_PROD;

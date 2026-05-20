@@ -1,4 +1,4 @@
-# PETROVA 300K — Data Model Documentation
+# PETROVA — Data Model Documentation
 
 ## Data Lineage Overview
 

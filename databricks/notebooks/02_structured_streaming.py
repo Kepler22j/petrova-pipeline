@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # PETROVA 300K – Structured Streaming (Databricks DE Associate Exam)
+# MAGIC # PETROVA – Structured Streaming (Databricks DE Associate Exam)
 # MAGIC Topics: readStream, writeStream, triggers, watermarks, output modes
 
 # COMMAND ----------

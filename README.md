@@ -1,8 +1,8 @@
 <div align="center">
 
-# PETROVA 300K
+# PETROVA
 
-### Hybrid Cloud Data Platform — Production-Grade Portfolio
+### Production-Grade Data Platform with Spark, Databricks, dbt, Snowflake & Real-Time Monitoring
 
 [![CI](https://github.com/Kepler22j/petrova-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Kepler22j/petrova-pipeline/actions)
 [![dbt](https://img.shields.io/badge/dbt-1.8.7-FF694B?logo=dbt)](https://www.getdbt.com/)
@@ -11,8 +11,8 @@
 [![Airflow](https://img.shields.io/badge/Airflow-017CEE?logo=apacheairflow&logoColor=white)](https://airflow.apache.org/)
 [![Terraform](https://img.shields.io/badge/Terraform-844FBA?logo=terraform&logoColor=white)](https://www.terraform.io/)
 
-**10 Architecture Layers · 10 Silver Cleaning Logics · 3-Gate Validation · Traffic-Light Priority**
-**16 dbt Models · 3 Fact Tables · AWS Security Specialty · Triple Certification**
+**Medallion Architecture · PySpark · Delta Lake · dbt · Snowflake · Airflow · Terraform · SPC Monitoring**
+**10 Architecture Layers · 16 dbt Models · 3-Gate Validation · Real-Time Alert Engine · Enterprise Security**
 
 [Architecture](#architecture) · [Quick Start](#quick-start) · [Medallion Layers](#medallion-architecture) · [Key Features](#key-features) · [Tech Stack](#tech-stack)
 
@@ -22,9 +22,9 @@
 
 ## Overview
 
-PETROVA 300K is a **hybrid cloud data platform** that bridges on-premises legacy systems (SAP, SSIS, SQL Server) with modern cloud services (Snowflake, Databricks, Azure Data Factory). It implements a **Medallion Architecture** with enterprise-grade data quality gates, SCD Type 2 history tracking, and FMEA-based risk validation.
+PETROVA is a **production-grade hybrid cloud data platform** that bridges on-premises legacy systems (SAP, SSIS, SQL Server) with modern cloud services (Snowflake, Databricks, Azure Data Factory). It implements a **Medallion Architecture** (Bronze → Silver → Gold) with 10 structured cleaning logics, SCD Type 2 history tracking, and a **Statistical Process Control (SPC) alert engine** for real-time equipment monitoring.
 
-This project demonstrates end-to-end data engineering at the scale and rigor expected in **$300K+ senior/staff data engineering roles**. Built with a **security-first mindset** (RBAC, AES-256, TLS 1.2+, Key Vault, Unity Catalog) and **SRE operational discipline** (1,200+ alert policies, Golden Signals, 99.5% SLA).
+Built with a **security-first mindset** (4-role RBAC, AES-256, TLS 1.2+, Azure Key Vault, Unity Catalog) and **SRE operational discipline** (1,200+ alert rules, composite severity routing, 99.5% SLA). Inspired by real-world APM platform experience on offshore oil rigs processing 400,000+ sensor records/day.
 
 ## Security Posture
 
@@ -45,7 +45,7 @@ This project demonstrates end-to-end data engineering at the scale and rigor exp
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    PETROVA 300K ARCHITECTURE                     │
+│                     PETROVA ARCHITECTURE                         │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐    │
@@ -57,7 +57,7 @@ This project demonstrates end-to-end data engineering at the scale and rigor exp
 │  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌────▼─────┐    │
 │  │ MONITOR  │   │ PRESENT  │   │ SEMANTIC  │   │   GOLD   │    │
 │  │ PagerDuty│◀──│ Power BI │◀──│   dbt    │◀──│ (Business)│    │
-│  │ Alerts   │   │ Streamlit│   │  Metrics  │   │  FMEA ✓  │    │
+│  │ Alerts   │   │ Streamlit│   │  Metrics  │   │  SPC  ✓  │    │
 │  └──────────┘   └──────────┘   └──────────┘   └──────────┘    │
 │                                                                  │
 │  ORCHESTRATION: Airflow 2.9.3 + ADF (Azure) + SSIS (On-Prem)   │
@@ -73,49 +73,38 @@ This project demonstrates end-to-end data engineering at the scale and rigor exp
 ## Quick Start
 
 ```bash
-# 1. Clone
+# 1. Clone & install
 git clone https://github.com/Kepler22j/petrova-pipeline.git
 cd petrova-pipeline
+make setup                        # Install all Python deps + dbt packages
 
 # 2. Environment setup
-cp .env.example .env
-# Edit .env with your Snowflake/Azure/Databricks credentials
+cp .env.example .env              # Edit with your Snowflake/Azure/Databricks credentials
 
-# 3. Validate environment
-bash scripts/validate_environment.sh
+# 3. Validate & lint
+make validate                     # Check environment readiness
+make lint                         # SQLFluff + Ruff
 
-# 4. Install dbt dependencies
-cd dbt && dbt deps --profiles-dir . && cd ..
-
-# 5. Run Snowflake DDL (in order)
+# 4. Run Snowflake DDL (in order)
 # Execute: snowflake/ddl/01_warehouse.sql through 06_stages_and_tasks.sql
 # Execute: snowflake/rbac/roles_and_grants.sql
 
-# 6. Run dbt pipeline
-cd dbt
-dbt run --select tag:bronze --target dev --profiles-dir .
-dbt run --select tag:silver --target dev --profiles-dir .
-dbt run --select tag:gold   --target dev --profiles-dir .
-dbt test --target dev --profiles-dir .
+# 5. Run dbt pipeline
+make dbt-seed                     # Load reference data
+make dbt-run                      # Bronze → Silver → Gold
+make dbt-test                     # Run all quality tests
 
-# 7. Start Airflow + PySpark + Jupyter (local dev)
-cd ../airflow
-docker compose build --no-cache
-docker compose up airflow-init    # Wait for "Airflow init complete!"
-docker compose up -d              # Start all services
+# 6. Start Airflow + PySpark + Jupyter (local dev)
+make docker-up                    # Start all Docker services
 
-# 8. Access services
+# 7. Access services
 # Airflow UI:    http://localhost:8080 (admin/admin)
 # Jupyter Lab:   http://localhost:8888 (token: petrova)
 # Spark UI:      http://localhost:4040 (when job runs)
-# PostgreSQL:    localhost:5432
 
-# 9. Run PySpark Delta Lab
+# 8. Run PySpark Delta Lab
 # Open Jupyter → notebooks/00_local_delta_lab.ipynb
 # Run all cells: Bronze → Silver → Gold with Delta Lake
-
-# 10. Launch Streamlit dashboard
-cd ../dashboards/streamlit && streamlit run app.py
 ```
 
 ## Medallion Architecture
@@ -152,7 +141,7 @@ cd ../dashboards/streamlit && streamlit run app.py
 ### Gold Layer (Business-Ready / Immutable)
 - **Purpose**: Aggregated KPIs and dimensions for BI consumption
 - **Protection**: 7 Gold Immutability Commandments + 4-role RBAC
-- **Validation**: Gold Gate — FMEA risk scoring (blocks if RPN > threshold)
+- **Validation**: Gold Gate — SPC alert engine (composite severity: CRITICAL/WARNING/OK)
 - **Models**: `fct_daily_sensor_kpi`, `fct_daily_revenue`, `fct_sensor_alerts`, `dim_equipment`, `dim_vendor`, `dim_customer`
 - **Alert Engine**: `fct_sensor_alerts` — 6 alert categories from 3 statistical primitives (STDDEV, LAG, THRESHOLD) with composite severity scoring (CRITICAL/WARNING/OK)
 - **Location**: `dbt/models/marts/`
@@ -166,7 +155,7 @@ Every record passes through three independent quality gates before reaching Gold
 |------|-------|--------|-----------|
 | Bronze Gate | Raw → Bronze | Schema validation, NOT NULL checks | Missing required columns |
 | Silver Gate | Bronze → Silver | Statistical rules, dbt_expectations | Quality score < threshold |
-| Gold Gate | Silver → Gold | FMEA risk assessment | Risk Priority Number > 100 |
+| Gold Gate | Silver → Gold | SPC alert engine (STDDEV + LAG + THRESHOLD) | Composite severity = CRITICAL |
 
 ### Triple Orchestration
 A unique pattern combining three orchestration engines:
@@ -238,7 +227,7 @@ petrova-pipeline/
 │   └── packages.yml        #   dbt_utils, dbt_expectations, codegen
 ├── docs/
 │   ├── architecture/       #   SVG architecture diagram
-│   ├── interview_prep/     #   Talking points for $300K+ interviews
+│   ├── interview_prep/     #   Talking points for senior data engineering interviews
 │   └── runbooks/           #   Incident response procedures
 ├── great_expectations/     # Data quality suites & checkpoints
 ├── monitoring/             # PagerDuty config, notification procedures
@@ -273,7 +262,7 @@ PETROVA_ADMIN          ← Full access, DDL, procedure management
 |-------|----------|---------|
 | Bronze Gate failure | Warning | PagerDuty + Email |
 | Silver Gate failure | Error | PagerDuty + Email |
-| Gold Gate FMEA block | Critical | PagerDuty → On-call → Manager |
+| Gold Gate CRITICAL alert | Critical | PagerDuty → On-call → Manager |
 | Pipeline timeout | Error | PagerDuty |
 | Snowpipe lag > 30min | Warning | PagerDuty |
 
@@ -343,12 +332,12 @@ Every component maps to at least one exam domain:
 
 ## License
 
-This project is a portfolio demonstration. All code is original work by **Jay Pechnarai (Jakapong Pechnarai)**.
+MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 
 <div align="center">
-<strong>Built for $300K+ Data Engineering roles</strong><br>
-<em>10 Layers · 10 Silver Logics · 16 dbt Models · 3 Fact Tables · Security-First · Zero Compromise</em><br>
-<em>By Jay Pechnarai — Senior Data Platform Engineer / SRE · 15+ Years Mission-Critical Systems</em>
+<strong>PETROVA — Production-Grade Data Platform</strong><br>
+<em>Spark · Databricks · dbt · Snowflake · Delta Lake · Airflow · Terraform · SPC Monitoring</em><br>
+<em>By Jay Pechnarai — Senior Data Platform Engineer · 15+ Years Mission-Critical Systems</em>
 </div>

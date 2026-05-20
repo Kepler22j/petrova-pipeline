@@ -1,10 +1,10 @@
 -- ============================================================
--- PETROVA 300K – Database & Schema Setup (Medallion Architecture)
+-- PETROVA – Database & Schema Setup (Medallion Architecture)
 -- ============================================================
 
 -- Production database
 CREATE DATABASE IF NOT EXISTS PETROVA_PROD
-    COMMENT = 'PETROVA 300K production data platform';
+    COMMENT = 'PETROVA production data platform';
 
 USE DATABASE PETROVA_PROD;
 

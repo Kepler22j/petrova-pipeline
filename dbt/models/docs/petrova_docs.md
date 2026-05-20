@@ -1,6 +1,6 @@
 {% docs petrova_overview %}
 
-# PETROVA 300K Data Platform
+# PETROVA Data Platform
 
 This dbt project implements a **Medallion Architecture** (Bronze → Silver → Gold)
 for the PETROVA hybrid cloud data platform.

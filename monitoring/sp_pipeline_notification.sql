@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – Pipeline Notification Procedure
+-- PETROVA – Pipeline Notification Procedure
 -- Sends email alerts on pipeline failure via Snowflake + SMTP
 -- ============================================================
 

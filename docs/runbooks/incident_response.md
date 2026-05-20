@@ -1,4 +1,4 @@
-# PETROVA 300K – Incident Response Runbook
+# PETROVA – Incident Response Runbook
 
 ## Severity Levels
 

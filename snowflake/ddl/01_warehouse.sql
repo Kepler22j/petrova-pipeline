@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – Snowflake Warehouse Setup
+-- PETROVA – Snowflake Warehouse Setup
 -- ============================================================
 
 -- Development warehouse (X-Small for cost control)

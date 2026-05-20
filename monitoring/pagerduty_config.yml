@@ -1,4 +1,4 @@
-# PETROVA 300K – PagerDuty Integration Config
+# PETROVA – PagerDuty Integration Config
 # Referenced by Airflow DAG for on-call alerting
 
 service:

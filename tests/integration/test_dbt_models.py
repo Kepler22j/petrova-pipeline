@@ -1,5 +1,5 @@
 """
-PETROVA 300K – Integration Tests for dbt Models
+PETROVA – Integration Tests for dbt Models
 Run: pytest tests/integration/ -v
 """
 import subprocess

@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – RBAC Setup (4-Role Hierarchy)
+-- PETROVA – RBAC Setup (4-Role Hierarchy)
 -- Ref: Agent.MD Section 6 – Gold Immutability Commandment #6
 -- ============================================================
 

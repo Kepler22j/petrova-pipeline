@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – Streams & Change Tracking (SnowPro Core Exam)
+-- PETROVA – Streams & Change Tracking (SnowPro Core Exam)
 -- Topics: Standard/Append-only streams, CHANGES clause, CDC
 -- ============================================================
 USE DATABASE PETROVA_PROD;

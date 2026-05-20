@@ -1,5 +1,5 @@
 -- ============================================================
--- PETROVA 300K – Time Travel & Fail-safe (SnowPro Core Exam)
+-- PETROVA – Time Travel & Fail-safe (SnowPro Core Exam)
 -- Topics: AT/BEFORE, UNDROP, DATA_RETENTION_TIME_IN_DAYS
 -- ============================================================
 USE DATABASE PETROVA_PROD;

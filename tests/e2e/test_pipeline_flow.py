@@ -1,5 +1,5 @@
 """
-PETROVA 300K – End-to-End Pipeline Test
+PETROVA – End-to-End Pipeline Test
 Validates the full Bronze → Silver → Gold flow.
 Run: pytest tests/e2e/ -v --snowflake
 """

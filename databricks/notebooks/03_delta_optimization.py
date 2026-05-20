@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # PETROVA 300K – Delta Lake Optimization (Databricks DE Associate Exam)
+# MAGIC # PETROVA – Delta Lake Optimization (Databricks DE Associate Exam)
 # MAGIC Topics: OPTIMIZE, VACUUM, Z-ORDER, file compaction, time travel cleanup
 # MAGIC
 # MAGIC **Why this matters:**
