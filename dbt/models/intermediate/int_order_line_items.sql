@@ -6,14 +6,14 @@
 /*
   Ephemeral model – compiled inline as CTE, never stored in database.
   Exam topic: ephemeral vs view vs table vs incremental.
-  
+
   Use cases: lightweight transformations, intermediate logic shared
   between multiple downstream models without creating a database object.
 */
 
 SELECT
-    order_number,
-    material_number,
+    order_id,
+    material_id,
     order_quantity,
     net_value,
     ROUND(net_value / NULLIF(order_quantity, 0), 2) AS unit_price,

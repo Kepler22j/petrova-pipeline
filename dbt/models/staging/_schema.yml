@@ -21,30 +21,56 @@ models:
     description: "Bronze layer: raw SAP maintenance orders"
     columns:
       - name: order_id
+        description: "Unique order identifier"
         tests:
           - not_null
           - unique
+      - name: equipment_id
+        description: "FK to equipment master"
+        tests:
+          - not_null
+      - name: order_date
+        description: "Date order was created"
+        tests:
+          - not_null
 
   - name: stg_sap_materials
     description: "Bronze layer: raw SAP material master"
     columns:
       - name: material_id
+        description: "Unique material identifier"
         tests:
           - not_null
           - unique
+      - name: material_name
+        description: "Material display name"
+        tests:
+          - not_null
 
   - name: stg_sap_vendors
     description: "Bronze layer: raw SAP vendor master"
     columns:
       - name: vendor_id
+        description: "Unique vendor identifier"
         tests:
           - not_null
           - unique
+      - name: vendor_name
+        description: "Vendor display name"
+        tests:
+          - not_null
 
   - name: stg_equipment_master
-    description: "Bronze layer: equipment registry"
+    description: "Bronze layer: equipment registry with install dates and status"
     columns:
       - name: equipment_id
+        description: "Unique equipment identifier"
         tests:
           - not_null
           - unique
+      - name: equipment_name
+        description: "Equipment display name"
+        tests:
+          - not_null
+      - name: status
+        description: "Current equipment status (ACTIVE, DECOMMISSIONED, etc.)"

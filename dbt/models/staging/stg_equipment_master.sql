@@ -8,5 +8,6 @@ SELECT
     location,
     install_date,
     manufacturer,
+    status,
     _loaded_at AS loaded_at
 FROM {{ source('raw', 'raw_equipment_master') }}

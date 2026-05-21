@@ -3,6 +3,7 @@
 
 SELECT
     vendor_id,
+    vendor_id AS vendor_number,   -- alias for SCD2 compatibility
     vendor_name,
     vendor_type,
     country,
