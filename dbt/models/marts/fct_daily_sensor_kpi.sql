@@ -2,7 +2,7 @@
     materialized='table',
     schema='gold',
     tags=['gold', 'kpi', 'sensors'],
-    pre_hook=["{{ log('Gold Gate: FMEA validation for sensor KPIs', info=True) }}"]
+    pre_hook=["{{ log('Gold Gate: SPC validation for sensor KPIs', info=True) }}"]
 ) }}
 
 /*

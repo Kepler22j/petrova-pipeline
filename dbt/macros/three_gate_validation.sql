@@ -28,13 +28,14 @@
     'EVALUATED' AS _silver_gate_result
 {% endmacro %}
 
-{% macro gold_gate_fmea(risk_column, threshold=100) %}
+{% macro gold_gate_spc(severity_column) %}
 {#
-  Gold Gate: FMEA risk assessment.
-  Blocks promotion if risk priority number exceeds threshold.
+  Gold Gate: SPC alert severity check.
+  Blocks promotion if composite severity = CRITICAL.
 #}
     CASE
-        WHEN {{ risk_column }} > {{ threshold }} THEN 'BLOCK'
+        WHEN {{ severity_column }} = 'CRITICAL' THEN 'BLOCK'
+        WHEN {{ severity_column }} = 'WARNING' THEN 'REVIEW'
         ELSE 'APPROVE'
-    END AS _gold_gate_fmea_result
+    END AS _gold_gate_spc_result
 {% endmacro %}

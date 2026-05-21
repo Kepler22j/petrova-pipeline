@@ -1,7 +1,7 @@
 """
 PETROVA — Validated Data Pipeline DAG
 Triple-Orchestration: Airflow + ADF + dbt
-3-Gate Validation: Bronze Gate → Silver Gate → Gold Gate (FMEA)
+3-Gate Validation: Bronze Gate → Silver Gate → Gold Gate (SPC)
 """
 from datetime import datetime, timedelta
 from airflow import DAG
@@ -50,9 +50,9 @@ def silver_gate_check(**context):
     else:
         return 'silver_gate_failed'
 
-def gold_gate_fmea_check(**context):
-    """Gold Gate (FMEA): Failure Mode & Effects Analysis on Gold layer."""
-    print("Running Gold Gate FMEA validation...")
+def gold_gate_spc_check(**context):
+    """Gold Gate (SPC): Statistical Process Control validation on Gold layer."""
+    print("Running Gold Gate SPC validation...")
     print("  - Checking KPI value ranges (min/max/stddev)")
     print("  - Checking record count delta vs previous run")
     print("  - Checking immutability compliance (7 Commandments)")
@@ -148,9 +148,9 @@ with DAG(
         bash_command='echo "dbt test --models marts (uniqueness, not_null, relationships)"',
     )
 
-    gold_gate_fmea = BranchPythonOperator(
-        task_id='gold_gate_fmea',
-        python_callable=gold_gate_fmea_check,
+    gold_gate_spc = BranchPythonOperator(
+        task_id='gold_gate_spc',
+        python_callable=gold_gate_spc_check,
     )
 
     gold_gate_passed = EmptyOperator(task_id='gold_gate_passed')
@@ -158,7 +158,7 @@ with DAG(
 
     alert_gold_failure = BashOperator(
         task_id='alert_gold_failure',
-        bash_command='echo "CRITICAL: Gold Gate FMEA failed — paging on-call engineer"',
+        bash_command='echo "CRITICAL: Gold Gate SPC CRITICAL alert — paging on-call engineer"',
         trigger_rule=TriggerRule.NONE_FAILED_MIN_ONE_SUCCESS,
     )
 
@@ -187,7 +187,7 @@ with DAG(
     bronze_gate_passed >> dbt_run_intermediate >> dbt_test_intermediate >> silver_gate
     silver_gate >> [silver_gate_passed, silver_gate_failed]
     silver_gate_failed >> quarantine_silver >> end
-    silver_gate_passed >> dbt_run_marts >> dbt_test_marts >> gold_gate_fmea
-    gold_gate_fmea >> [gold_gate_passed, gold_gate_failed]
+    silver_gate_passed >> dbt_run_marts >> dbt_test_marts >> gold_gate_spc
+    gold_gate_spc >> [gold_gate_passed, gold_gate_failed]
     gold_gate_failed >> alert_gold_failure >> end
     gold_gate_passed >> snapshot_gold >> notify_success >> end

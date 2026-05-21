@@ -15,7 +15,7 @@ for the PETROVA hybrid cloud data platform.
 
 ## Key Patterns
 
-- **3-Gate Validation**: Bronze Gate (schema) → Silver Gate (quality) → Gold Gate (FMEA)
+- **3-Gate Validation**: Bronze Gate (schema) → Silver Gate (quality) → Gold Gate (SPC alerts)
 - **SCD Type 2**: Full history tracking via snapshots and custom `scd2_merge` macro
 - **Gold Immutability**: MERGE-only writes, RBAC enforcement, Zero-Copy Clone backup
 

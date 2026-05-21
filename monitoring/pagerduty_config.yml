@@ -16,9 +16,9 @@ alerts:
     summary: "Silver Gate quality check failed – data quality below threshold"
     routing_key: ${PAGERDUTY_ROUTING_KEY}
 
-  gold_gate_fmea_block:
+  gold_gate_spc_critical:
     severity: critical
-    summary: "Gold Gate FMEA BLOCKED – Risk Priority Number exceeds threshold"
+    summary: "Gold Gate SPC CRITICAL – Composite alert severity triggered (UNSTABLE + NOISY)"
     routing_key: ${PAGERDUTY_ROUTING_KEY}
 
   pipeline_timeout:
