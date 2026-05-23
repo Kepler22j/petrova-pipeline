@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="2700" viewBox="0 0 750 1350" style="font-family:'Segoe UI',Arial,sans-serif;background:#fff">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="3480" viewBox="0 0 750 1740" style="font-family:'Segoe UI',Arial,sans-serif;background:#fff">
 <style>
 text{fill:#3d3d3a}
 .th{font-size:13px;font-weight:500}
@@ -8,7 +8,6 @@ text{fill:#3d3d3a}
 .arr-red{stroke:#DC2626;stroke-width:2.2}
 .arr-yellow{stroke:#D97706;stroke-width:1.8}
 .arr-green{stroke:#16A34A;stroke-width:1.5}
-.arr{stroke:#73726c;stroke-width:1.5}
 .c-coral rect{fill:#FAECE7;stroke:#993C1D;stroke-width:0.5}
 .c-coral .th{fill:#712B13}.c-coral .ts{fill:#993C1D}
 .c-purple rect{fill:#EEEDFE;stroke:#534AB7;stroke-width:0.5}
@@ -29,11 +28,13 @@ text{fill:#3d3d3a}
 .c-gray .th{fill:#444441}.c-gray .ts{fill:#5F5E5A}
 .c-red rect{fill:#FCE4EC;stroke:#C00000;stroke-width:0.6}
 .c-red .th{fill:#8B0000}.c-red .ts{fill:#C00000}
-.silver-box rect{fill:#F0F4FF;stroke:#3366AA;stroke-width:0.4}
-.silver-box .th{fill:#1a3a6a;font-size:10px}
+/* Logic row styling */
+.logic-row rect{fill:#F0F4FF;stroke:#3366AA;stroke-width:0.4}
+.lib-tag{font-size:8px;font-weight:500;fill:#534AB7}
+.fail-tag{font-size:8px;font-weight:500;fill:#DC2626}
+.warn-tag{font-size:8px;font-weight:500;fill:#D97706}
 </style>
 <defs>
-<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#73726c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
 <marker id="arrowRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
 <marker id="arrowYellow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
 <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -44,213 +45,349 @@ text{fill:#3d3d3a}
 <text class="ts" x="375" y="38" text-anchor="middle" opacity="0.6">PySpark 3.5.3 · Delta Lake 3.2.1 · Snowflake · Databricks · Airflow 2.9.3 · dbt 1.8.7 · dbt Cloud Studio</text>
 
 <!-- ═══ LEGEND ═══ -->
-<rect x="540" y="44" width="200" height="52" rx="6" fill="#FAFAFA" stroke="#E0E0E0" stroke-width="0.5"/>
+<rect x="540" y="44" width="200" height="64" rx="6" fill="#FAFAFA" stroke="#E0E0E0" stroke-width="0.5"/>
 <text x="550" y="58" font-size="9" font-weight="600" fill="#333">Connection Priority:</text>
-<line x1="550" y1="70" x2="580" y2="70" class="arr-red" marker-end="url(#arrowRed)"/>
-<text x="588" y="74" font-size="8.5" fill="#DC2626" font-weight="500">CRITICAL (core pipeline)</text>
-<line x1="550" y1="82" x2="580" y2="82" class="arr-yellow" marker-end="url(#arrowYellow)"/>
-<text x="588" y="86" font-size="8.5" fill="#D97706" font-weight="500">MEDIUM (quality/orchestration)</text>
-<line x1="550" y1="94" x2="580" y2="94" class="arr-green" marker-end="url(#arrowGreen)"/>
-<text x="588" y="98" font-size="8.5" fill="#16A34A" font-weight="500">STANDARD (analytics/monitoring)</text>
+<line x1="550" y1="68" x2="575" y2="68" class="arr-red" marker-end="url(#arrowRed)"/>
+<text x="582" y="72" font-size="8.5" fill="#DC2626" font-weight="500">CRITICAL (core pipeline)</text>
+<line x1="550" y1="80" x2="575" y2="80" class="arr-yellow" marker-end="url(#arrowYellow)"/>
+<text x="582" y="84" font-size="8.5" fill="#D97706" font-weight="500">MEDIUM (quality / orchestration)</text>
+<line x1="550" y1="92" x2="575" y2="92" class="arr-green" marker-end="url(#arrowGreen)"/>
+<text x="582" y="96" font-size="8.5" fill="#16A34A" font-weight="500">STANDARD (analytics / monitoring)</text>
+<rect x="550" y="98" width="8" height="4" rx="1" fill="#DC2626" opacity="0.3"/><line x1="554" y1="100" x2="570" y2="100" stroke="#DC2626" stroke-width="1" stroke-dasharray="3,2"/><text x="582" y="104" font-size="7.5" fill="#DC2626">✗ FAIL notification path</text>
 
-<!-- ═══ LAYER 1: DATA SOURCES ═══ -->
-<text class="th" x="42" y="118">Layer 1: Data Sources</text>
-<g class="c-coral"><rect x="36" y="126" width="155" height="44" rx="4"/><text class="th" x="114" y="142" text-anchor="middle" dominant-baseline="central">IoT Sensors</text><text class="ts" x="114" y="158" text-anchor="middle" dominant-baseline="central">Parquet, 400K+/day</text></g>
-<g class="c-coral"><rect x="203" y="126" width="155" height="44" rx="4"/><text class="th" x="281" y="142" text-anchor="middle" dominant-baseline="central">SAP ERP</text><text class="ts" x="281" y="158" text-anchor="middle" dominant-baseline="central">BODS batch 2AM</text></g>
-<g class="c-coral"><rect x="370" y="126" width="155" height="44" rx="4"/><text class="th" x="448" y="142" text-anchor="middle" dominant-baseline="central">Equipment Registry</text><text class="ts" x="448" y="158" text-anchor="middle" dominant-baseline="central">Master data</text></g>
-<g class="c-coral"><rect x="537" y="126" width="155" height="44" rx="4"/><text class="th" x="615" y="142" text-anchor="middle" dominant-baseline="central">SQL Server</text><text class="ts" x="615" y="158" text-anchor="middle" dominant-baseline="central">OLTP on-prem</text></g>
+<!-- ═══ LAYER 1: DATA SOURCES — SOFT PEACH ═══ -->
+<text x="42" y="122" font-size="13" font-weight="600" fill="#2D2D2D">Layer 1: Data Sources</text>
+<rect x="36" y="128" width="155" height="40" rx="5" fill="#FFF5F0" stroke="#E8734A" stroke-width="0.6"/>
+<text x="114" y="143" text-anchor="middle" font-size="12" font-weight="600" fill="#7C2D12">IoT Sensors</text>
+<text x="114" y="159" text-anchor="middle" font-size="9.5" fill="#9A3412">Parquet, 400K+/day</text>
+<rect x="203" y="128" width="155" height="40" rx="5" fill="#FFF5F0" stroke="#E8734A" stroke-width="0.6"/>
+<text x="281" y="143" text-anchor="middle" font-size="12" font-weight="600" fill="#7C2D12">SAP ERP</text>
+<text x="281" y="159" text-anchor="middle" font-size="9.5" fill="#9A3412">BODS batch 2AM</text>
+<rect x="370" y="128" width="155" height="40" rx="5" fill="#FFF5F0" stroke="#E8734A" stroke-width="0.6"/>
+<text x="448" y="143" text-anchor="middle" font-size="12" font-weight="600" fill="#7C2D12">Equipment Registry</text>
+<text x="448" y="159" text-anchor="middle" font-size="9.5" fill="#9A3412">Master data</text>
+<rect x="537" y="128" width="155" height="40" rx="5" fill="#FFF5F0" stroke="#E8734A" stroke-width="0.6"/>
+<text x="615" y="143" text-anchor="middle" font-size="12" font-weight="600" fill="#7C2D12">SQL Server</text>
+<text x="615" y="159" text-anchor="middle" font-size="9.5" fill="#9A3412">OLTP on-prem</text>
 
-<!-- RED arrows: Source → Ingestion -->
-<line x1="114" y1="170" x2="114" y2="208" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="126" y="192" fill="#DC2626">pyarrow</text>
-<line x1="281" y1="170" x2="281" y2="208" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="293" y="192" fill="#DC2626">pyrfc</text>
-<line x1="448" y1="170" x2="448" y2="208" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="460" y="192" fill="#DC2626">pandas</text>
-<line x1="615" y1="170" x2="615" y2="208" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="627" y="192" fill="#DC2626">pyodbc</text>
+<!-- Source → Ingestion arrows -->
+<line x1="114" y1="168" x2="114" y2="190" class="arr-red" marker-end="url(#arrowRed)"/>
+<line x1="281" y1="168" x2="281" y2="190" class="arr-red" marker-end="url(#arrowRed)"/>
+<line x1="448" y1="168" x2="448" y2="190" class="arr-red" marker-end="url(#arrowRed)"/>
+<line x1="615" y1="168" x2="615" y2="190" class="arr-red" marker-end="url(#arrowRed)"/>
 
-<!-- ═══ LAYER 2: INGESTION ═══ -->
-<text class="th" x="42" y="208">Layer 2: Ingestion &amp; Extraction</text>
-<g class="c-purple"><rect x="36" y="216" width="220" height="50" rx="4"/><text class="th" x="146" y="234" text-anchor="middle" dominant-baseline="central">Auto Loader (cloudFiles)</text><text class="ts" x="146" y="250" text-anchor="middle" dominant-baseline="central">Schema inference + rescue col</text></g>
-<g class="c-purple"><rect x="268" y="216" width="220" height="50" rx="4"/><text class="th" x="378" y="234" text-anchor="middle" dominant-baseline="central">ADF + COPY INTO</text><text class="ts" x="378" y="250" text-anchor="middle" dominant-baseline="central">CSV→Parquet, Snowpipe</text></g>
-<g class="c-purple"><rect x="500" y="216" width="200" height="50" rx="4"/><text class="th" x="600" y="234" text-anchor="middle" dominant-baseline="central">SSIS + SAP BODS</text><text class="ts" x="600" y="250" text-anchor="middle" dominant-baseline="central">C# validation, 8 patterns</text></g>
+<!-- ═══ LAYER 2: INGESTION — SOFT LAVENDER ═══ -->
+<text x="42" y="190" font-size="13" font-weight="600" fill="#2D2D2D">Layer 2: Ingestion &amp; Extraction</text>
+<rect x="36" y="196" width="220" height="42" rx="5" fill="#F5F3FF" stroke="#7C3AED" stroke-width="0.6"/>
+<text x="146" y="212" text-anchor="middle" font-size="11" font-weight="600" fill="#3C1D95">Auto Loader (cloudFiles)</text>
+<text x="146" y="228" text-anchor="middle" font-size="9" fill="#5B21B6">Schema inference + rescue col</text>
+<rect x="268" y="196" width="220" height="42" rx="5" fill="#F5F3FF" stroke="#7C3AED" stroke-width="0.6"/>
+<text x="378" y="212" text-anchor="middle" font-size="11" font-weight="600" fill="#3C1D95">ADF + COPY INTO</text>
+<text x="378" y="228" text-anchor="middle" font-size="9" fill="#5B21B6">CSV→Parquet, Snowpipe</text>
+<rect x="500" y="196" width="220" height="42" rx="5" fill="#F5F3FF" stroke="#7C3AED" stroke-width="0.6"/>
+<text x="610" y="212" text-anchor="middle" font-size="11" font-weight="600" fill="#3C1D95">SSIS + SAP BODS</text>
+<text x="610" y="228" text-anchor="middle" font-size="9" fill="#5B21B6">C# validation, 8 patterns</text>
 
-<!-- RED arrows: ALL Ingestion → Bronze ONLY -->
-<line x1="146" y1="266" x2="138" y2="306" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="120" y="286" fill="#DC2626">pyspark.sql</text>
-<line x1="378" y1="266" x2="168" y2="306" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="290" y="278" fill="#DC2626">snowflake-connector</text>
-<line x1="600" y1="266" x2="198" y2="306" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="430" y="270" fill="#DC2626">sqlalchemy</text>
+<!-- ALL ingestion → Bronze (converge to center) -->
+<line x1="146" y1="238" x2="375" y2="268" class="arr-red" marker-end="url(#arrowRed)"/>
+<line x1="378" y1="238" x2="375" y2="268" class="arr-red" marker-end="url(#arrowRed)"/>
+<line x1="610" y1="238" x2="375" y2="268" class="arr-red" marker-end="url(#arrowRed)"/>
 
-<!-- ═══ LAYER 3: MEDALLION ARCHITECTURE (contains Silver with gates) ═══ -->
-<text class="th" x="42" y="296">Layer 3: Medallion Architecture — Bronze → Silver (10 Cleaning Logics) → Gold</text>
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ LAYER 3: MEDALLION — VERTICAL FLOW ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<text class="th" x="42" y="262">Layer 3: Medallion Architecture (Vertical Pipeline Flow)</text>
 
-<!-- Outer medallion container -->
-<g class="c-teal"><rect x="24" y="302" width="704" height="350" rx="10"/></g>
-<text class="tx" x="376" y="316" text-anchor="middle" opacity="0.7">Databricks (Delta Lake) + Snowflake (PETROVA_DW) — Dual-platform hybrid</text>
+<!-- Outer container -->
+<g class="c-teal"><rect x="24" y="268" width="704" height="658" rx="10"/></g>
+<text class="tx" x="376" y="282" text-anchor="middle" opacity="0.6">Databricks (Delta Lake) + Snowflake (PETROVA_DW) — Dual-platform hybrid</text>
 
-<!-- BRONZE box (compact, left) -->
-<g class="c-gray"><rect x="34" y="324" width="120" height="52" rx="4"/><text class="th" x="94" y="342" text-anchor="middle" dominant-baseline="central">BRONZE</text><text class="ts" x="94" y="358" text-anchor="middle" dominant-baseline="central">5 staging views</text></g>
+<!-- ══ BRONZE ══ -->
+<rect x="230" y="288" width="292" height="42" rx="6" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.8"/>
+<text x="376" y="306" text-anchor="middle" font-size="13" font-weight="600" fill="#444441">BRONZE — Raw Layer</text>
+<text class="tx" x="376" y="322" text-anchor="middle">5 staging views · materialized='view' · zero-copy</text>
 
-<!-- RED arrow: Bronze → Silver area -->
-<line x1="154" y1="350" x2="170" y2="350" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="152" y="342" fill="#DC2626">dbt run</text>
+<!-- Arrow Bronze → Silver -->
+<line x1="376" y1="330" x2="376" y2="348" class="arr-red" marker-end="url(#arrowRed)"/>
+<text class="tlib" x="388" y="342" fill="#DC2626">dbt run</text>
 
-<!-- ══ SILVER EXPANDED AREA (contains 3 gates with 10 logics) ══ -->
-<rect x="172" y="324" width="410" height="316" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.8"/>
-<text x="377" y="340" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">SILVER (Cleaned) — 3-Gate Validation · 10 Logics · SCD2</text>
+<!-- ══ SILVER — EXPANDED WITH 10 LOGICS ══ -->
+<rect x="34" y="348" width="684" height="424" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.8"/>
+<text x="376" y="366" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">SILVER — 3-Gate Validation · 10 Cleaning Logics · SCD2 · Incremental</text>
 
-<!-- Gate 1: Schema & Type (#1-3) -->
-<g class="c-red"><rect x="182" y="348" width="390" height="56" rx="4"/></g>
-<text x="188" y="364" font-size="10" font-weight="600" fill="#8B0000">GATE 1: Schema &amp; Type</text>
-<g class="silver-box"><rect x="188" y="370" width="120" height="26" rx="3"/><text class="th" x="196" y="386" dominant-baseline="central">#1 Null Flagging</text></g>
-<g class="silver-box"><rect x="316" y="370" width="120" height="26" rx="3"/><text class="th" x="324" y="386" dominant-baseline="central">#2 Type Casting</text></g>
-<g class="silver-box"><rect x="444" y="370" width="120" height="26" rx="3"/><text class="th" x="452" y="386" dominant-baseline="central">#3 Range Check</text></g>
+<!-- Column headers -->
+<text x="100" y="380" font-size="8" font-weight="600" fill="#0C447C" text-anchor="middle">Logic</text>
+<text x="310" y="380" font-size="8" font-weight="600" fill="#534AB7" text-anchor="middle">Python Library / Function</text>
+<text x="570" y="380" font-size="8" font-weight="600" fill="#DC2626" text-anchor="middle">✗ On Failure → Airflow Notification</text>
 
-<!-- RED arrow Gate 1 → Gate 2 -->
-<line x1="377" y1="404" x2="377" y2="414" class="arr-red" marker-end="url(#arrowRed)"/>
+<!-- ── GATE 1: Schema & Type ── -->
+<rect x="44" y="386" width="664" height="100" rx="5" fill="#FCE4EC" stroke="#C00000" stroke-width="0.5" opacity="0.4"/>
+<text x="54" y="400" font-size="10" font-weight="600" fill="#8B0000">GATE 1: Schema &amp; Type Validation</text>
 
-<!-- Gate 2: Business Rules (#4-7) -->
-<g class="c-red"><rect x="182" y="414" width="390" height="70" rx="4"/></g>
-<text x="188" y="430" font-size="10" font-weight="600" fill="#8B0000">GATE 2: Business Rules</text>
-<g class="silver-box"><rect x="188" y="436" width="92" height="26" rx="3"/><text class="th" x="196" y="452" dominant-baseline="central">#4 Filter</text></g>
-<g class="silver-box"><rect x="286" y="436" width="92" height="26" rx="3"/><text class="th" x="294" y="452" dominant-baseline="central">#5 Dedup</text></g>
-<g class="silver-box"><rect x="384" y="436" width="92" height="26" rx="3"/><text class="th" x="392" y="452" dominant-baseline="central">#6 Derive</text></g>
-<g class="silver-box"><rect x="478" y="436" width="86" height="26" rx="3"/><text class="th" x="486" y="452" dominant-baseline="central">#7 SCD2</text></g>
-<text class="tx" x="377" y="476" text-anchor="middle" fill="#854F0B">ROW_NUMBER · MERGE · withColumn · quality_flag = PASS|WARN|FAIL</text>
+<!-- #1 Null Detection -->
+<g class="logic-row"><rect x="50" y="406" width="120" height="22" rx="3"/></g>
+<text x="58" y="420" font-size="9" font-weight="500" fill="#1a3a6a">#1 Null Detection</text>
+<text x="190" y="420" class="lib-tag">pyspark: col().isNull(), when(), otherwise()</text>
+<text x="470" y="420" class="fail-tag">FAIL → EmailOperator('bronze_gate_null_alert')</text>
 
-<!-- RED arrow Gate 2 → Gate 3 -->
-<line x1="377" y1="484" x2="377" y2="494" class="arr-red" marker-end="url(#arrowRed)"/>
+<!-- #2 Type Casting -->
+<g class="logic-row"><rect x="50" y="432" width="120" height="22" rx="3"/></g>
+<text x="58" y="446" font-size="9" font-weight="500" fill="#1a3a6a">#2 Type Casting</text>
+<text x="190" y="446" class="lib-tag">pyspark: col().cast(DoubleType()), withColumn()</text>
+<text x="470" y="446" class="fail-tag">FAIL → EmailOperator('type_mismatch_alert')</text>
 
-<!-- Gate 3: Cross-Table (#8-10) -->
-<g class="c-red"><rect x="182" y="494" width="390" height="56" rx="4"/></g>
-<text x="188" y="510" font-size="10" font-weight="600" fill="#8B0000">GATE 3: Cross-Table Validation</text>
-<g class="silver-box"><rect x="188" y="516" width="120" height="26" rx="3"/><text class="th" x="196" y="532" dominant-baseline="central">#8 Ref Integrity</text></g>
-<g class="silver-box"><rect x="316" y="516" width="120" height="26" rx="3"/><text class="th" x="324" y="532" dominant-baseline="central">#9 Agg Guards</text></g>
-<g class="silver-box"><rect x="444" y="516" width="120" height="26" rx="3"/><text class="th" x="452" y="532" dominant-baseline="central">#10 Late Data</text></g>
+<!-- #3 Range Validation -->
+<g class="logic-row"><rect x="50" y="458" width="120" height="22" rx="3"/></g>
+<text x="58" y="472" font-size="9" font-weight="500" fill="#1a3a6a">#3 Range Check</text>
+<text x="190" y="472" class="lib-tag">pyspark: col().between(-999, 9999), filter()</text>
+<text x="470" y="472" class="warn-tag">WARN → EmailOperator('range_violation_warn')</text>
 
-<!-- Silver summary -->
-<text class="tx" x="377" y="562" text-anchor="middle" fill="#0C447C">5 intermediate models · incremental · great_expectations + dbt test</text>
-<text class="tx" x="377" y="574" text-anchor="middle" fill="#16A34A" font-weight="500">Output: Only PASS/WARN records promoted to Gold</text>
+<!-- Arrow Gate 1 → Gate 2 -->
+<line x1="376" y1="486" x2="376" y2="498" class="arr-red" marker-end="url(#arrowRed)"/>
+<text class="tx" x="394" y="496" fill="#DC2626" font-weight="500">quality_flag = PASS|WARN|FAIL</text>
 
-<!-- Compute labels inside Silver -->
-<text class="tx" x="377" y="590" text-anchor="middle" fill="#854F0B" font-style="italic">Gate 1→PySpark · Gate 2→PySpark+dbt · Gate 3→dbt test+Streaming</text>
+<!-- ── GATE 2: Business Rules ── -->
+<rect x="44" y="498" width="664" height="128" rx="5" fill="#FCE4EC" stroke="#C00000" stroke-width="0.5" opacity="0.4"/>
+<text x="54" y="512" font-size="10" font-weight="600" fill="#8B0000">GATE 2: Business Rules</text>
 
-<!-- YELLOW arrow: Silver output → join point -->
-<line x1="377" y1="600" x2="377" y2="616" class="arr-yellow" marker-end="url(#arrowYellow)"/>
+<!-- #4 Status Filtering -->
+<g class="logic-row"><rect x="50" y="518" width="120" height="22" rx="3"/></g>
+<text x="58" y="532" font-size="9" font-weight="500" fill="#1a3a6a">#4 Status Filter</text>
+<text x="190" y="532" class="lib-tag">pyspark: filter(col('status') != 'CANCELLED')</text>
+<text x="470" y="532" class="fail-tag">FAIL → EmailOperator('invalid_status_filter')</text>
 
-<!-- Small join connector to Gold input (Silver output feeds horizontally to Gold) -->
-<line x1="377" y1="616" x2="596" y2="616" class="arr-red" stroke-dasharray="4,3"/>
-<line x1="596" y1="616" x2="596" y2="642" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="480" y="612" fill="#DC2626">dbt run (PASS/WARN only)</text>
+<!-- #5 Dedup -->
+<g class="logic-row"><rect x="50" y="544" width="120" height="22" rx="3"/></g>
+<text x="58" y="558" font-size="9" font-weight="500" fill="#1a3a6a">#5 Dedup</text>
+<text x="190" y="558" class="lib-tag">pyspark: Window.partitionBy(), ROW_NUMBER()</text>
+<text x="470" y="558" class="warn-tag">WARN → EmailOperator('duplicate_detected')</text>
 
-<!-- GOLD box (compact, bottom-right of medallion) -->
-<rect x="594" y="324" width="124" height="52" rx="4" fill="#FFF8E1" stroke="#B8860B" stroke-width="0.7"/>
-<text x="656" y="342" text-anchor="middle" font-size="12" font-weight="600" fill="#8B6914">GOLD</text>
-<text class="ts" x="656" y="358" text-anchor="middle" fill="#8B6914">3 facts · 3 dims</text>
+<!-- #6 Derived Columns -->
+<g class="logic-row"><rect x="50" y="570" width="120" height="22" rx="3"/></g>
+<text x="58" y="584" font-size="9" font-weight="500" fill="#1a3a6a">#6 Derived Cols</text>
+<text x="190" y="584" class="lib-tag">pyspark: withColumn(), DATEDIFF(), CASE WHEN</text>
+<text x="470" y="584" class="warn-tag">WARN → EmailOperator('derivation_error')</text>
 
-<!-- Gold detail: SPC + RBAC -->
-<rect x="594" y="378" width="124" height="58" rx="4" fill="#FFF8E1" stroke="#B8860B" stroke-width="0.5"/>
-<text x="656" y="394" text-anchor="middle" font-size="9" font-weight="500" fill="#8B6914">SPC Alert Engine</text>
-<text class="tx" x="656" y="408" text-anchor="middle" fill="#8B6914">6 alerts from</text>
-<text class="tx" x="656" y="420" text-anchor="middle" fill="#8B6914">STDDEV+LAG+THR</text>
-<text class="tx" x="656" y="432" text-anchor="middle" fill="#DC2626" font-weight="500">CRITICAL/WARN/OK</text>
+<!-- #7 SCD2 Merge -->
+<g class="logic-row"><rect x="50" y="596" width="120" height="22" rx="3"/></g>
+<text x="58" y="610" font-size="9" font-weight="500" fill="#1a3a6a">#7 SCD2 Merge</text>
+<text x="190" y="610" class="lib-tag">dbt: generate_surrogate_key(), MERGE INTO, MD5()</text>
+<text x="470" y="610" class="fail-tag">FAIL → EmailOperator('scd2_merge_conflict')</text>
 
-<!-- Gold: RBAC badge -->
-<rect x="594" y="440" width="124" height="24" rx="3" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.4"/>
-<text x="656" y="456" text-anchor="middle" font-size="8.5" font-weight="500" fill="#444441">RBAC · Immutable · MERGE</text>
+<!-- Arrow Gate 2 → Gate 3 -->
+<line x1="376" y1="626" x2="376" y2="638" class="arr-red" marker-end="url(#arrowRed)"/>
+<text class="tx" x="394" y="636" fill="#DC2626" font-weight="500">ROW_NUMBER · MERGE · withColumn</text>
 
-<!-- RED arrow: Gold → Layer 4 (Compute) -->
-<line x1="656" y1="652" x2="656" y2="680" class="arr-red" marker-end="url(#arrowRed)"/>
-<text class="tlib" x="664" y="668" fill="#DC2626">output</text>
+<!-- ── GATE 3: Cross-Table Validation ── -->
+<rect x="44" y="638" width="664" height="100" rx="5" fill="#FCE4EC" stroke="#C00000" stroke-width="0.5" opacity="0.4"/>
+<text x="54" y="652" font-size="10" font-weight="600" fill="#8B0000">GATE 3: Cross-Table Validation</text>
 
-<!-- ═══ LAYER 4: COMPUTE ENGINES ═══ -->
-<text class="th" x="42" y="674">Layer 4: Compute Engines</text>
+<!-- #8 Referential Integrity -->
+<g class="logic-row"><rect x="50" y="658" width="120" height="22" rx="3"/></g>
+<text x="58" y="672" font-size="9" font-weight="500" fill="#1a3a6a">#8 Ref Integrity</text>
+<text x="190" y="672" class="lib-tag">dbt: relationships test, LEFT JOIN + IS NULL check</text>
+<text x="470" y="672" class="fail-tag">FAIL → EmailOperator('orphan_record_alert')</text>
 
-<!-- Databricks — prominent -->
-<g class="c-dbk"><rect x="36" y="682" width="240" height="56" rx="6"/><text class="th" x="156" y="700" text-anchor="middle" dominant-baseline="central" font-size="14">Databricks</text><text class="ts" x="156" y="718" text-anchor="middle" dominant-baseline="central">Unity Catalog · DLT · Workflows</text><text class="tx" x="156" y="732" text-anchor="middle" fill="#E8590C">Runtime 15.4 LTS · Photon</text></g>
+<!-- #9 Aggregation Guards -->
+<g class="logic-row"><rect x="50" y="684" width="120" height="22" rx="3"/></g>
+<text x="58" y="698" font-size="9" font-weight="500" fill="#1a3a6a">#9 Agg Guards</text>
+<text x="190" y="698" class="lib-tag">dbt: HAVING COUNT(*) > 0, dbt_utils.expression_is_true</text>
+<text x="470" y="698" class="warn-tag">WARN → EmailOperator('aggregation_anomaly')</text>
 
-<!-- PySpark -->
-<g class="c-blue"><rect x="288" y="682" width="190" height="56" rx="4"/><text class="th" x="383" y="700" text-anchor="middle" dominant-baseline="central">PySpark 3.5.3</text><text class="ts" x="383" y="718" text-anchor="middle" dominant-baseline="central">Delta Lake 3.2.1</text><text class="tx" x="383" y="732" text-anchor="middle">OPTIMIZE · ZORDER</text></g>
+<!-- #10 Late-Arriving Data -->
+<g class="logic-row"><rect x="50" y="710" width="120" height="22" rx="3"/></g>
+<text x="58" y="724" font-size="9" font-weight="500" fill="#1a3a6a">#10 Late Data</text>
+<text x="190" y="724" class="lib-tag">spark: withWatermark(), window(), trigger(once=True)</text>
+<text x="470" y="724" class="warn-tag">WARN → EmailOperator('late_arrival_warning')</text>
 
-<!-- dbt -->
-<g class="c-blue"><rect x="490" y="682" width="230" height="56" rx="4"/><text class="th" x="605" y="700" text-anchor="middle" dominant-baseline="central">dbt Core 1.8.7</text><text class="ts" x="605" y="718" text-anchor="middle" dominant-baseline="central">16 models · 4 macros</text><text class="tx" x="605" y="732" text-anchor="middle">dbt Cloud Studio · dbt-snowflake</text></g>
+<!-- Silver output summary -->
+<text x="376" y="748" text-anchor="middle" font-size="9" font-weight="500" fill="#0C447C">Output: Only PASS + WARN records promoted → Gold | FAIL records → quarantine table + Airflow alert</text>
+<text x="376" y="760" text-anchor="middle" font-size="8.5" fill="#16A34A" font-weight="500">great_expectations + dbt test validate every gate before promotion</text>
 
-<!-- Python Libraries Box -->
-<rect x="36" y="744" width="684" height="26" rx="4" fill="#FFF8F0" stroke="#E8590C" stroke-width="0.4"/>
-<text x="375" y="761" text-anchor="middle" font-size="8.5" fill="#C2410C" font-weight="500">pyspark · delta-spark · dbt-core · great-expectations · pandas · pyarrow · snowflake-connector-python · pyodbc · sqlalchemy · streamlit · plotly</text>
+<!-- Arrow Silver → Gold -->
+<line x1="376" y1="770" x2="376" y2="788" class="arr-red" marker-end="url(#arrowRed)"/>
+<text class="tlib" x="388" y="782" fill="#DC2626">dbt run (PASS/WARN)</text>
 
-<!-- YELLOW arrows to Orchestration -->
-<line x1="156" y1="770" x2="156" y2="800" class="arr-yellow" marker-end="url(#arrowYellow)"/>
-<text class="tlib" x="168" y="788" fill="#D97706">databricks-sdk</text>
-<line x1="383" y1="770" x2="383" y2="800" class="arr-yellow" marker-end="url(#arrowYellow)"/>
-<text class="tlib" x="395" y="788" fill="#D97706">apache-airflow</text>
-<line x1="605" y1="770" x2="605" y2="800" class="arr-yellow" marker-end="url(#arrowYellow)"/>
-<text class="tlib" x="617" y="788" fill="#D97706">dbt-runner</text>
+<!-- ══ GOLD — with SPC detail ══ -->
+<rect x="120" y="788" width="512" height="124" rx="8" fill="#FFF8E1" stroke="#B8860B" stroke-width="0.8"/>
+<text x="376" y="806" text-anchor="middle" font-size="12" font-weight="600" fill="#8B6914">GOLD — Business Layer · 3 Facts + 3 Dims · RBAC · Immutable</text>
+
+<!-- Gold internals -->
+<rect x="134" y="814" width="236" height="48" rx="4" fill="#FFF3E6" stroke="#E8590C" stroke-width="0.4"/>
+<text x="252" y="830" text-anchor="middle" font-size="9.5" font-weight="600" fill="#C2410C">SPC Alert Engine (6 alerts)</text>
+<text x="252" y="844" text-anchor="middle" font-size="8" fill="#854F0B">STDDEV → stability | LAG → spike/volatility</text>
+<text x="252" y="856" text-anchor="middle" font-size="8" fill="#854F0B">THRESHOLD → range/outlier | CV → signal noise</text>
+
+<rect x="382" y="814" width="236" height="48" rx="4" fill="#FCE4EC" stroke="#C00000" stroke-width="0.4"/>
+<text x="500" y="828" text-anchor="middle" font-size="9" font-weight="600" fill="#8B0000">Composite Severity Routing</text>
+<text x="500" y="842" text-anchor="middle" font-size="8" fill="#DC2626" font-weight="500">CRITICAL → PagerDuty 30-min escalation</text>
+<text x="500" y="854" text-anchor="middle" font-size="8" fill="#D97706" font-weight="500">WARNING → Airflow EmailOperator</text>
+<text x="500" y="866" text-anchor="middle" font-size="8" fill="#16A34A" font-weight="500">OK → Streamlit dashboard only</text>
+
+<!-- Gold RBAC footer -->
+<text x="376" y="880" text-anchor="middle" font-size="8" fill="#8B6914">py: snowflake-connector-python · dbt-core · great-expectations | RBAC: GOLD_READER / GOLD_WRITER</text>
+
+<!-- Gold output: ✗ notification -->
+<text x="376" y="900" text-anchor="middle" font-size="8" fill="#DC2626" font-weight="500">✗ Gold Gate SPC CRITICAL → PagerDutyOperator('gold_gate_spc_critical') + SmtpOperator</text>
+
+<!-- Arrow Gold → Layer 4 Compute -->
+<line x1="376" y1="908" x2="376" y2="936" class="arr-red" marker-end="url(#arrowRed)"/>
+<text class="tlib" x="388" y="926" fill="#DC2626">Gold output → Compute</text>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ LAYER 4: COMPUTE ENGINES — VERTICAL WORKFLOW ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<text class="th" x="42" y="936">Layer 4: Compute Engines (Vertical Workflow)</text>
+
+<!-- Outer compute container -->
+<rect x="24" y="942" width="704" height="342" rx="10" fill="#FFF8F0" stroke="#E8590C" stroke-width="0.6"/>
+
+<!-- Column headers -->
+<text x="110" y="958" font-size="8" font-weight="600" fill="#C2410C" text-anchor="middle">Engine</text>
+<text x="330" y="958" font-size="8" font-weight="600" fill="#534AB7" text-anchor="middle">Process &amp; Python Libraries</text>
+<text x="610" y="958" font-size="8" font-weight="600" fill="#DC2626" text-anchor="middle">✗ On Failure → Notification</text>
+
+<!-- ── Compute 1: Databricks ── -->
+<g class="c-dbk"><rect x="34" y="964" width="150" height="56" rx="5"/></g>
+<text x="109" y="982" text-anchor="middle" font-size="12" font-weight="600" fill="#C2410C">Databricks</text>
+<text x="109" y="996" text-anchor="middle" font-size="8.5" fill="#E8590C">Unity Catalog · DLT</text>
+<text x="109" y="1008" text-anchor="middle" font-size="8" fill="#E8590C">Runtime 15.4 LTS · Photon</text>
+
+<text x="200" y="980" class="lib-tag">databricks-sdk: WorkspaceClient(), jobs.run_now()</text>
+<text x="200" y="992" class="lib-tag">delta-spark: DeltaTable.forPath(), optimize(), vacuum()</text>
+<text x="200" y="1004" class="lib-tag">Process: Schema enforcement, DLT expectations, Unity lineage</text>
+<text x="200" y="1016" class="lib-tag">pyspark.sql: SparkSession, DataFrame API, Structured Streaming</text>
+
+<text x="540" y="980" class="fail-tag">DLT expectation FAIL →</text>
+<text x="540" y="992" class="fail-tag">DatabricksRunNowOperator.on_failure_callback</text>
+<text x="540" y="1004" class="fail-tag">→ EmailOperator('dlt_pipeline_failure')</text>
+<text x="540" y="1016" class="fail-tag">→ PagerDuty (if CRITICAL severity)</text>
+
+<!-- Arrow Databricks → PySpark -->
+<line x1="109" y1="1020" x2="109" y2="1040" class="arr-red" marker-end="url(#arrowRed)"/>
+
+<!-- ── Compute 2: PySpark ── -->
+<g class="c-blue"><rect x="34" y="1040" width="150" height="56" rx="5"/></g>
+<text x="109" y="1058" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">PySpark 3.5.3</text>
+<text x="109" y="1072" text-anchor="middle" font-size="8.5" fill="#185FA5">Delta Lake 3.2.1</text>
+<text x="109" y="1084" text-anchor="middle" font-size="8" fill="#185FA5">OPTIMIZE · ZORDER</text>
+
+<text x="200" y="1056" class="lib-tag">pyspark.sql.functions: col(), when(), lit(), window()</text>
+<text x="200" y="1068" class="lib-tag">pyspark.sql.window: Window.partitionBy().orderBy()</text>
+<text x="200" y="1080" class="lib-tag">Process: Gate 1-2 transforms, OPTIMIZE, ZORDER, VACUUM</text>
+<text x="200" y="1092" class="lib-tag">delta.tables: DeltaTable.forPath(spark, path).history()</text>
+
+<text x="540" y="1056" class="fail-tag">Spark job exception →</text>
+<text x="540" y="1068" class="fail-tag">SparkSubmitOperator.on_failure_callback</text>
+<text x="540" y="1080" class="fail-tag">→ EmailOperator('spark_transform_failure')</text>
+<text x="540" y="1092" class="warn-tag">WARN: OPTIMIZE skip → SlackWebhookOperator</text>
+
+<!-- Arrow PySpark → dbt -->
+<line x1="109" y1="1096" x2="109" y2="1116" class="arr-red" marker-end="url(#arrowRed)"/>
+
+<!-- ── Compute 3: dbt Core ── -->
+<g class="c-blue"><rect x="34" y="1116" width="150" height="56" rx="5"/></g>
+<text x="109" y="1134" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">dbt Core 1.8.7</text>
+<text x="109" y="1148" text-anchor="middle" font-size="8.5" fill="#185FA5">16 models · 4 macros</text>
+<text x="109" y="1160" text-anchor="middle" font-size="8" fill="#185FA5">dbt Cloud Studio</text>
+
+<text x="200" y="1132" class="lib-tag">dbt-core: ref(), source(), is_incremental(), config()</text>
+<text x="200" y="1144" class="lib-tag">dbt-snowflake: snowflake adapter | dbt-databricks: spark adapter</text>
+<text x="200" y="1156" class="lib-tag">Process: Gate 2-3 SQL transforms, dbt test, dbt docs, snapshots</text>
+<text x="200" y="1168" class="lib-tag">dbt_utils: generate_surrogate_key(), expression_is_true()</text>
+
+<text x="540" y="1132" class="fail-tag">dbt test failure (exit code 1) →</text>
+<text x="540" y="1144" class="fail-tag">BashOperator.on_failure_callback</text>
+<text x="540" y="1156" class="fail-tag">→ EmailOperator('dbt_test_failure')</text>
+<text x="540" y="1168" class="fail-tag">→ GitHub Actions status check FAIL</text>
+
+<!-- Arrow dbt → Streaming -->
+<line x1="109" y1="1172" x2="109" y2="1192" class="arr-red" marker-end="url(#arrowRed)"/>
+
+<!-- ── Compute 4: Structured Streaming ── -->
+<g class="c-blue"><rect x="34" y="1192" width="150" height="56" rx="5"/></g>
+<text x="109" y="1210" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">Streaming</text>
+<text x="109" y="1224" text-anchor="middle" font-size="8.5" fill="#185FA5">Structured Streaming</text>
+<text x="109" y="1236" text-anchor="middle" font-size="8" fill="#185FA5">Trigger · Watermark</text>
+
+<text x="200" y="1208" class="lib-tag">pyspark.sql.streaming: readStream(), writeStream()</text>
+<text x="200" y="1220" class="lib-tag">spark.sql.streaming: withWatermark(), trigger(once=True)</text>
+<text x="200" y="1232" class="lib-tag">Process: Gate 3 late-data handling, Snowpipe monitoring, CDC</text>
+<text x="200" y="1244" class="lib-tag">snowflake-connector-python: Snowpipe status, COPY history</text>
+
+<text x="540" y="1208" class="fail-tag">Stream query exception →</text>
+<text x="540" y="1220" class="fail-tag">ExternalTaskSensor timeout (30 min) →</text>
+<text x="540" y="1232" class="fail-tag">→ PagerDutyOperator('stream_failure_critical')</text>
+<text x="540" y="1244" class="fail-tag">→ Snowpipe lag > 30m → EmailOperator</text>
+
+<!-- Compute summary -->
+<text x="376" y="1272" text-anchor="middle" font-size="8.5" fill="#C2410C" font-weight="500">All failures trigger Airflow on_failure_callback → EmailOperator (default) | PagerDuty (CRITICAL) | SlackWebhookOperator (WARN)</text>
+
+<!-- Arrow Layer 4 → Layer 5 -->
+<line x1="376" y1="1284" x2="376" y2="1306" class="arr-yellow" marker-end="url(#arrowYellow)"/>
 
 <!-- ═══ LAYER 5: ORCHESTRATION ═══ -->
-<text class="th" x="42" y="798">Layer 5: Orchestration</text>
-<g class="c-pink"><rect x="36" y="806" width="220" height="46" rx="4"/><text class="th" x="146" y="822" text-anchor="middle" dominant-baseline="central">Apache Airflow 2.9.3</text><text class="ts" x="146" y="838" text-anchor="middle" dominant-baseline="central">Docker · DAGs · XCom · Sensors</text></g>
-<g class="c-pink"><rect x="268" y="806" width="220" height="46" rx="4"/><text class="th" x="378" y="822" text-anchor="middle" dominant-baseline="central">ADF Pipelines</text><text class="ts" x="378" y="838" text-anchor="middle" dominant-baseline="central">Event triggers · Blob ingest</text></g>
-<g class="c-pink"><rect x="500" y="806" width="220" height="46" rx="4"/><text class="th" x="610" y="822" text-anchor="middle" dominant-baseline="central">Databricks Workflows</text><text class="ts" x="610" y="838" text-anchor="middle" dominant-baseline="central">Job clusters · JSON config</text></g>
+<text x="42" y="1304" font-size="13" font-weight="600" fill="#2D2D2D">Layer 5: Orchestration</text>
+<rect x="36" y="1310" width="220" height="40" rx="6" fill="#FDF2F8" stroke="#D946A8" stroke-width="0.6"/>
+<text x="146" y="1334" text-anchor="middle" font-size="12" font-weight="600" fill="#831843">Apache Airflow 2.9.3</text>
+<rect x="268" y="1310" width="220" height="40" rx="6" fill="#FDF2F8" stroke="#D946A8" stroke-width="0.6"/>
+<text x="378" y="1334" text-anchor="middle" font-size="12" font-weight="600" fill="#831843">ADF Pipelines</text>
+<rect x="500" y="1310" width="220" height="40" rx="6" fill="#FDF2F8" stroke="#D946A8" stroke-width="0.6"/>
+<text x="610" y="1334" text-anchor="middle" font-size="12" font-weight="600" fill="#831843">Databricks Workflows</text>
 
-<!-- GREEN arrows to Analytics -->
-<line x1="146" y1="852" x2="146" y2="884" class="arr-green" marker-end="url(#arrowGreen)"/>
-<text class="tlib" x="158" y="872" fill="#16A34A">streamlit</text>
-<line x1="378" y1="852" x2="378" y2="884" class="arr-green" marker-end="url(#arrowGreen)"/>
-<text class="tlib" x="390" y="872" fill="#16A34A">snowpark</text>
-<line x1="610" y1="852" x2="610" y2="884" class="arr-green" marker-end="url(#arrowGreen)"/>
-<text class="tlib" x="622" y="872" fill="#16A34A">plotly</text>
+<!-- Arrow → Analytics -->
+<line x1="376" y1="1350" x2="376" y2="1370" class="arr-green" marker-end="url(#arrowGreen)"/>
 
 <!-- ═══ LAYER 6: ANALYTICS ═══ -->
-<text class="th" x="42" y="882">Layer 6: Analytics &amp; Reporting</text>
-<g class="c-blue"><rect x="36" y="890" width="160" height="42" rx="4"/><text class="th" x="116" y="906" text-anchor="middle" dominant-baseline="central">Power BI</text><text class="ts" x="116" y="920" text-anchor="middle" dominant-baseline="central">8 DAX KPIs · RLS</text></g>
-<g class="c-blue"><rect x="208" y="890" width="160" height="42" rx="4"/><text class="th" x="288" y="906" text-anchor="middle" dominant-baseline="central">Streamlit</text><text class="ts" x="288" y="920" text-anchor="middle" dominant-baseline="central">Real-time dashboard</text></g>
-<g class="c-blue"><rect x="380" y="890" width="160" height="42" rx="4"/><text class="th" x="460" y="906" text-anchor="middle" dominant-baseline="central">dbt Cloud Studio</text><text class="ts" x="460" y="920" text-anchor="middle" dominant-baseline="central">IDE · Lineage · Docs</text></g>
-<g class="c-blue"><rect x="552" y="890" width="160" height="42" rx="4"/><text class="th" x="632" y="906" text-anchor="middle" dominant-baseline="central">Jupyter / Spark UI</text><text class="ts" x="632" y="920" text-anchor="middle" dominant-baseline="central">Dev + monitoring</text></g>
+<text x="42" y="1368" font-size="13" font-weight="600" fill="#2D2D2D">Layer 6: Analytics &amp; Reporting</text>
+<rect x="36" y="1374" width="155" height="38" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="0.6"/>
+<text x="114" y="1397" text-anchor="middle" font-size="11" font-weight="600" fill="#1E3A5F">Power BI</text>
+<rect x="203" y="1374" width="155" height="38" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="0.6"/>
+<text x="281" y="1397" text-anchor="middle" font-size="11" font-weight="600" fill="#1E3A5F">Streamlit</text>
+<rect x="370" y="1374" width="155" height="38" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="0.6"/>
+<text x="448" y="1397" text-anchor="middle" font-size="11" font-weight="600" fill="#1E3A5F">dbt Cloud Studio</text>
+<rect x="537" y="1374" width="155" height="38" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="0.6"/>
+<text x="615" y="1397" text-anchor="middle" font-size="11" font-weight="600" fill="#1E3A5F">Jupyter / Spark UI</text>
 
-<!-- GREEN arrow to Monitoring -->
-<line x1="375" y1="932" x2="375" y2="958" class="arr-green" marker-end="url(#arrowGreen)"/>
-<text class="tlib" x="387" y="948" fill="#16A34A">alertmanager / smtp</text>
+<!-- Arrow → Monitoring -->
+<line x1="376" y1="1412" x2="376" y2="1432" class="arr-green" marker-end="url(#arrowGreen)"/>
 
 <!-- ═══ LAYER 7: MONITORING ═══ -->
-<text class="th" x="42" y="956">Layer 7: Monitoring &amp; Alerting</text>
-<g class="c-green"><rect x="36" y="964" width="220" height="42" rx="4"/><text class="th" x="146" y="980" text-anchor="middle" dominant-baseline="central">PagerDuty</text><text class="ts" x="146" y="994" text-anchor="middle" dominant-baseline="central">30-min escalation chain</text></g>
-<g class="c-green"><rect x="268" y="964" width="220" height="42" rx="4"/><text class="th" x="378" y="980" text-anchor="middle" dominant-baseline="central">Azure Monitor</text><text class="ts" x="378" y="994" text-anchor="middle" dominant-baseline="central">5-min health checks</text></g>
-<g class="c-green"><rect x="500" y="964" width="220" height="42" rx="4"/><text class="th" x="610" y="980" text-anchor="middle" dominant-baseline="central">GitHub Actions CI</text><text class="ts" x="610" y="994" text-anchor="middle" dominant-baseline="central">SQLFluff + dbt test + lint</text></g>
+<text x="42" y="1430" font-size="13" font-weight="600" fill="#2D2D2D">Layer 7: Monitoring &amp; Alerting</text>
+<rect x="36" y="1436" width="220" height="38" rx="6" fill="#F0FDF4" stroke="#22C55E" stroke-width="0.6"/>
+<text x="146" y="1459" text-anchor="middle" font-size="11" font-weight="600" fill="#14532D">PagerDuty (30-min SLA)</text>
+<rect x="268" y="1436" width="220" height="38" rx="6" fill="#F0FDF4" stroke="#22C55E" stroke-width="0.6"/>
+<text x="378" y="1459" text-anchor="middle" font-size="11" font-weight="600" fill="#14532D">Azure Monitor</text>
+<rect x="500" y="1436" width="220" height="38" rx="6" fill="#F0FDF4" stroke="#22C55E" stroke-width="0.6"/>
+<text x="610" y="1459" text-anchor="middle" font-size="11" font-weight="600" fill="#14532D">GitHub Actions CI</text>
 
-<!-- GREEN arrow to Security -->
-<line x1="375" y1="1006" x2="375" y2="1030" class="arr-green" marker-end="url(#arrowGreen)"/>
+<!-- Arrow → Security -->
+<line x1="376" y1="1474" x2="376" y2="1494" class="arr-green" marker-end="url(#arrowGreen)"/>
 
 <!-- ═══ LAYER 8: SECURITY ═══ -->
-<text class="th" x="42" y="1028">Layer 8: Security &amp; Governance</text>
-<g class="c-gray"><rect x="24" y="1036" width="704" height="40" rx="8"/><text class="th" x="376" y="1052" text-anchor="middle" dominant-baseline="central">RBAC (4 roles) · Gold 7 Commandments · Unity Catalog · Key Vault · AES-256 · TLS 1.2+</text><text class="tx" x="376" y="1066" text-anchor="middle" opacity="0.7">PETROVA_ADMIN &gt; PETROVA_ENGINEER &gt; PETROVA_ANALYST &gt; PETROVA_READER</text></g>
+<text x="42" y="1492" font-size="13" font-weight="600" fill="#2D2D2D">Layer 8: Security &amp; Governance</text>
+<rect x="24" y="1498" width="704" height="36" rx="8" fill="#F8F7F4" stroke="#A8A29E" stroke-width="0.6"/>
+<text x="376" y="1520" text-anchor="middle" font-size="11" font-weight="500" fill="#3D3D3A">RBAC (4 roles) · Gold 7 Commandments · Unity Catalog · Key Vault · AES-256 · TLS 1.2+</text>
 
 <!-- ═══ LAYER 9: LOCAL DEV ═══ -->
-<text class="th" x="42" y="1098">Layer 9: Local Development Stack (Docker Compose)</text>
-<g class="c-gray"><rect x="24" y="1106" width="704" height="40" rx="8"/>
-<text class="th" x="115" y="1122" text-anchor="middle" dominant-baseline="central">PostgreSQL 15</text>
-<text class="th" x="280" y="1122" text-anchor="middle" dominant-baseline="central">Airflow UI :8080</text>
-<text class="th" x="445" y="1122" text-anchor="middle" dominant-baseline="central">Jupyter :8888</text>
-<text class="th" x="610" y="1122" text-anchor="middle" dominant-baseline="central">Spark UI :4040</text>
-<text class="tx" x="376" y="1138" text-anchor="middle" opacity="0.7">quay.io/jupyter/pyspark-notebook:spark-3.5.3 · apache/airflow:2.9.3 · Delta Lake OSS 3.2.1</text>
-</g>
+<text x="42" y="1552" font-size="13" font-weight="600" fill="#2D2D2D">Layer 9: Local Dev (Docker Compose)</text>
+<rect x="24" y="1558" width="704" height="36" rx="8" fill="#F8F7F4" stroke="#A8A29E" stroke-width="0.6"/>
+<text x="376" y="1580" text-anchor="middle" font-size="11" font-weight="500" fill="#3D3D3A">PostgreSQL 15 · Airflow :8080 · Jupyter :8888 · Spark UI :4040</text>
 
 <!-- ═══ LAYER 10: QUERY PERFORMANCE ═══ -->
-<text class="th" x="42" y="1170">Layer 10: Query Performance &amp; Optimization</text>
-<rect x="24" y="1178" width="704" height="44" rx="8" fill="#FFF8E1" stroke="#B8860B" stroke-width="0.5"/>
-<text x="376" y="1194" text-anchor="middle" font-size="9.5" font-weight="500" fill="#8B6914">Incremental models (Silver) · Surrogate keys (dbt_utils) · Partition pruning · ZORDER clustering</text>
-<text class="tx" x="376" y="1210" text-anchor="middle" fill="#854F0B">Window functions (LAG/ROW_NUMBER) · NULLIF division safety · COALESCE null handling · SPC composite scoring</text>
+<text x="42" y="1612" font-size="13" font-weight="600" fill="#2D2D2D">Layer 10: Query Performance</text>
+<rect x="24" y="1618" width="704" height="32" rx="6" fill="#FFFBEB" stroke="#D4A017" stroke-width="0.6"/>
+<text x="376" y="1638" text-anchor="middle" font-size="9.5" fill="#78350F" font-weight="500">Incremental · Surrogate keys · ZORDER clustering · Window fns (LAG/ROW_NUMBER) · NULLIF · COALESCE · SPC composite</text>
 
 <!-- ═══ CERTIFICATION BADGES ═══ -->
-<text class="th" x="42" y="1242">Certification Alignment</text>
-<g class="c-dbk"><rect x="30" y="1248" width="216" height="26" rx="4"/><text class="tx" x="138" y="1264" text-anchor="middle" dominant-baseline="central" fill="#C2410C" font-weight="500">Databricks DE Associate</text></g>
-<g class="c-teal"><rect x="254" y="1248" width="216" height="26" rx="4"/><text class="tx" x="362" y="1264" text-anchor="middle" dominant-baseline="central" fill="#085041" font-weight="500">SnowPro Core (COF-C03)</text></g>
-<g class="c-purple"><rect x="478" y="1248" width="234" height="26" rx="4"/><text class="tx" x="595" y="1264" text-anchor="middle" dominant-baseline="central" fill="#3C3489" font-weight="500">dbt Analytics Engineer</text></g>
+<rect x="30" y="1660" width="216" height="24" rx="5" fill="#FFF7ED" stroke="#EA580C" stroke-width="0.6"/>
+<text x="138" y="1676" text-anchor="middle" font-size="9.5" fill="#9A3412" font-weight="600">Databricks DE Associate</text>
+<rect x="254" y="1660" width="216" height="24" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="0.6"/>
+<text x="362" y="1676" text-anchor="middle" font-size="9.5" fill="#064E3B" font-weight="600">SnowPro Core (COF-C03)</text>
+<rect x="478" y="1660" width="234" height="24" rx="5" fill="#F5F3FF" stroke="#7C3AED" stroke-width="0.6"/>
+<text x="595" y="1676" text-anchor="middle" font-size="9.5" fill="#4C1D95" font-weight="600">dbt Analytics Engineer</text>
 
-<!-- ═══ BOTTOM: Python Ecosystem ═══ -->
-<rect x="24" y="1286" width="704" height="30" rx="6" fill="#1B2A4A"/>
-<text x="376" y="1304" text-anchor="middle" font-size="9" fill="#FFFFFF" font-weight="500">Python 3.11 · pip · venv · Docker Compose · Git · GitHub Actions · VS Code · pre-commit · SQLFluff · black · ruff</text>
+<!-- ═══ BOTTOM BAR ═══ -->
+<rect x="24" y="1692" width="704" height="28" rx="6" fill="#1E293B"/>
+<text x="376" y="1710" text-anchor="middle" font-size="9" fill="#F8FAFC" font-weight="500">Python 3.11 · pip · venv · Docker Compose · Git · GitHub Actions · VS Code · pre-commit · SQLFluff · black · ruff</text>
 </svg>
