@@ -143,6 +143,16 @@ When asked "how does this compare to real-world platforms?":
 
 ---
 
+## VS Code vs dbt Cloud IDE
+
+**VS Code (daily driver):** Full control, offline, free, dbt Power User extension, multi-project. No built-in scheduler/CI — use Airflow + GitHub Actions. Not tested on cert exam.
+
+**dbt Cloud (cert + CI/CD):** Built-in lineage graph, job scheduler, CI/CD, compiled code tab, defer to production. All exam topics. Free plan = 1 project only, requires internet, limited terminal.
+
+**Interview answer:** "I use both. VS Code for daily dev — full control, Docker, Airflow, everything local. dbt Cloud for certification topics and production job scheduling. Complementary, not competing."
+
+---
+
 ## PTTEP Production Anchors
 
 Use these to ground every answer in real-world experience:

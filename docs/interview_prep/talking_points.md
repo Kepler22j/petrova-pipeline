@@ -110,6 +110,37 @@ Located in `docs/workflow_diagrams/`:
 7. **Incremental Processing** — Auto Loader + is_incremental() + full refresh fallback
 8. **Local E2E Pipeline** — Docker Compose → 6 services → dbt seed/run/test → 51/51 PASS
 
+## VS Code vs dbt Cloud IDE (Interview Ready)
+
+### VS Code — Local Development (Daily Driver)
+
+**PRO** Full control — any extension, any plugin, any terminal. Run Docker, git, Python, dbt all in one place.
+**PRO** Works offline — no internet required. Perfect for flight/train coding or unreliable connections.
+**PRO** Free forever — no seat limits, no run limits, no project limits.
+**PRO** dbt Power User extension — lineage preview, model preview, auto-complete, inline compiled SQL.
+**PRO** Multi-project support — open multiple dbt projects in workspaces simultaneously.
+**CON** No built-in job scheduler — need Airflow/cron/external tool to schedule runs.
+**CON** No built-in CI/CD — must configure GitHub Actions yourself.
+**CON** No browser-based lineage graph — need `dbt docs generate + serve` (local only).
+**CON** Manual environment management — profiles.yml targets, env vars, all manual config.
+**CON** Not tested on dbt cert exam — exam tests Cloud IDE, not VS Code.
+
+### dbt Cloud IDE — Certification & CI/CD
+
+**PRO** Built-in lineage graph — visual DAG right in the editor (exam tests this).
+**PRO** Built-in job scheduler — schedule dbt build daily/hourly without external tools.
+**PRO** Built-in CI/CD — PR triggers slim CI run automatically (exam topic).
+**PRO** Git workflow integrated — branch, commit, PR all from the IDE (exam topic).
+**PRO** Compiled code tab — see Jinja → SQL in real time (exam tests this).
+**PRO** Defer to production — dev reads unmodified models from prod (saves compute).
+**CON** Free plan = 1 project only — need Team plan ($100/mo) for multiple projects.
+**CON** Requires internet always — no offline development possible.
+**CON** Limited terminal access — can't run Docker, Airflow, or Python scripts.
+**CON** Slower than local VS Code — browser-based editor has latency.
+
+### Interview Answer
+"I use both. VS Code is my daily driver for development — full control, Docker, Airflow, everything local. dbt Cloud is for the certification exam topics (lineage graph, compiled code tab, CI/CD, defer to production) and for scheduling production jobs. They're complementary, not competing."
+
 ## dbt Cert Exam — UI Topics to Study
 
 These are tested on the dbt Analytics Engineer exam but not in your codebase:
