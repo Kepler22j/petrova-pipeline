@@ -1,0 +1,99 @@
+<svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" style="background:white">
+<style>
+text{font-family:Arial,Helvetica,sans-serif}
+.title{font-size:18px;font-weight:bold;fill:#1a1a1a}
+.layer{font-size:13px;font-weight:bold;fill:#1a1a1a}
+.label{font-size:11px;fill:#1a1a1a}
+.small{font-size:10px;fill:#555}
+.key{font-size:10px;fill:#1a1a1a}
+.keybold{font-size:10px;font-weight:bold;fill:#0C447C}
+.pass{fill:#059669}
+.fail{fill:#DC2626}
+.arrow{fill:none;stroke:#444;stroke-width:1.5;marker-end:url(#ah)}
+.dasharrow{fill:none;stroke:#444;stroke-width:1.5;stroke-dasharray:6,3;marker-end:url(#ah)}
+</style>
+<defs><marker id="ah" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse"><polygon points="0 0, 10 3.5, 0 7" fill="#444"/></marker></defs>
+<text x="450" y="28" text-anchor="middle" class="title">PETROVA: SLA Protection Workflow Pattern</text>
+<line x1="30" y1="38" x2="870" y2="38" stroke="#ddd" stroke-width="1"/>
+<rect x="30" y="50" width="400" height="95" rx="4" fill="#F0F9FF" stroke="#93C5FD" stroke-width="1"/>
+<text x="40" y="68" class="layer">LAYER 3: INGESTION &amp; BRONZE</text>
+<rect x="50" y="78" width="100" height="50" rx="4" fill="#DBEAFE" stroke="#60A5FA"/>
+<text x="100" y="100" text-anchor="middle" class="label">IoT Sensor</text>
+<text x="100" y="113" text-anchor="middle" class="small">Raw Telemetry</text>
+<path d="M150,103 L185,103" class="arrow"/>
+<rect x="185" y="78" width="110" height="50" rx="4" fill="#E0E7FF" stroke="#818CF8"/>
+<text x="240" y="98" text-anchor="middle" class="label">Azure Data</text>
+<text x="240" y="111" text-anchor="middle" class="label">Factory (ADF)</text>
+<text x="240" y="122" text-anchor="middle" class="small">Auto Loader</text>
+<path d="M295,103 L330,103" class="arrow"/>
+<rect x="330" y="78" width="90" height="50" rx="6" fill="#FEF3C7" stroke="#F59E0B"/>
+<text x="375" y="100" text-anchor="middle" class="label" style="font-weight:bold">BRONZE</text>
+<text x="375" y="113" text-anchor="middle" class="small">Delta Tables</text>
+<rect x="30" y="155" width="550" height="130" rx="4" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1"/>
+<text x="40" y="173" class="layer">LAYER 4: 3-GATE VALIDATION [PySpark]</text>
+<path d="M375,128 L375,185" class="arrow"/>
+<rect x="310" y="185" width="130" height="45" rx="4" fill="#DCFCE7" stroke="#4ADE80"/>
+<text x="375" y="205" text-anchor="middle" class="label">Batch Processing</text>
+<text x="375" y="218" text-anchor="middle" class="small">trigger_rule="all_done"</text>
+<path d="M440,207 L520,207 L520,250" class="arrow"/>
+<text x="475" y="200" class="pass" style="font-size:11px;font-weight:bold">PASS</text>
+<path d="M375,230 L375,255 L200,255" class="arrow"/>
+<text x="300" y="250" class="fail" style="font-size:11px;font-weight:bold">FAIL</text>
+<rect x="80" y="238" width="120" height="38" rx="4" fill="#FEE2E2" stroke="#F87171"/>
+<text x="140" y="255" text-anchor="middle" class="label">QUARANTINE</text>
+<text x="140" y="268" text-anchor="middle" class="small">Delta Table</text>
+<rect x="470" y="250" width="100" height="28" rx="4" fill="#DCFCE7" stroke="#4ADE80"/>
+<text x="520" y="269" text-anchor="middle" class="label" style="font-weight:bold">SILVER</text>
+<rect x="30" y="295" width="550" height="140" rx="4" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1"/>
+<text x="40" y="313" class="layer">LAYER 5: GOLD AGGREGATION [dbt]</text>
+<path d="M520,278 L520,325" class="arrow"/>
+<rect x="440" y="325" width="130" height="45" rx="6" fill="#FEF3C7" stroke="#F59E0B"/>
+<text x="505" y="345" text-anchor="middle" class="label" style="font-weight:bold">Gold Aggregation</text>
+<text x="505" y="358" text-anchor="middle" class="small">trigger_rule="all_done"</text>
+<path d="M505,370 L505,410" class="arrow"/>
+<text x="515" y="395" class="pass" style="font-size:11px;font-weight:bold">ALL OK</text>
+<path d="M440,347 L290,347 L290,388" class="arrow"/>
+<text x="350" y="340" class="fail" style="font-size:11px;font-weight:bold">FAILURE</text>
+<rect x="220" y="388" width="140" height="38" rx="4" fill="#FEE2E2" stroke="#F87171"/>
+<text x="290" y="405" text-anchor="middle" class="label">Fallback Snapshot</text>
+<text x="290" y="418" text-anchor="middle" class="small">Cached Gold (stale but safe)</text>
+<rect x="445" y="410" width="120" height="28" rx="6" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
+<text x="505" y="429" text-anchor="middle" class="label" style="font-weight:bold;fill:#059669">GOLD LIVE</text>
+<rect x="30" y="450" width="550" height="70" rx="4" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1"/>
+<text x="40" y="468" class="layer">LAYER 7: PRESENTATION &amp; CONSUMPTION</text>
+<path d="M290,426 L290,480" class="dasharrow"/>
+<path d="M505,438 L505,480" class="arrow"/>
+<rect x="350" y="478" width="200" height="32" rx="4" fill="#EDE9FE" stroke="#A78BFA"/>
+<text x="450" y="499" text-anchor="middle" class="label">Power BI / Business Users</text>
+<rect x="610" y="50" width="270" height="470" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="625" y="75" class="layer">KEY CONCEPTS</text>
+<text x="625" y="100" class="keybold">trigger_rule="all_done"</text>
+<text x="625" y="115" class="key">Gold task runs even if Silver fails.</text>
+<text x="625" y="130" class="key">Prevents pipeline freeze.</text>
+<text x="625" y="145" class="key">SLA met = always deliver data.</text>
+<line x1="625" y1="158" x2="860" y2="158" stroke="#E2E8F0"/>
+<text x="625" y="178" class="keybold">Fallback Snapshot Logic</text>
+<text x="625" y="193" class="key">If Gold fails: serve cached snapshot.</text>
+<text x="625" y="208" class="key">Business sees stale but valid data.</text>
+<text x="625" y="223" class="key">Zero-Copy Clone = instant, no cost.</text>
+<line x1="625" y1="236" x2="860" y2="236" stroke="#E2E8F0"/>
+<text x="625" y="256" class="keybold">Trade-off: Availability &gt; Freshness</text>
+<text x="625" y="271" class="key">Stale data &gt; no data.</text>
+<text x="625" y="286" class="key">Freshness indicator warns users.</text>
+<text x="625" y="301" class="key">PagerDuty alert notifies engineers.</text>
+<line x1="625" y1="314" x2="860" y2="314" stroke="#E2E8F0"/>
+<text x="625" y="334" class="keybold">3-Gate Validation</text>
+<text x="625" y="349" class="key">Gate 1: Schema (column types)</text>
+<text x="625" y="364" class="key">Gate 2: Business rules (ranges)</text>
+<text x="625" y="379" class="key">Gate 3: Referential integrity</text>
+<text x="625" y="394" class="key">Fail any gate: quarantine record.</text>
+<line x1="625" y1="407" x2="860" y2="407" stroke="#E2E8F0"/>
+<text x="625" y="427" class="keybold">Exam Relevance</text>
+<text x="625" y="442" class="key">Databricks DE: trigger_rule, Delta</text>
+<text x="625" y="457" class="key">SnowPro: Zero-Copy Clone, failover</text>
+<text x="625" y="472" class="key">dbt: incremental + snapshot strategy</text>
+<line x1="625" y1="485" x2="860" y2="485" stroke="#E2E8F0"/>
+<text x="625" y="505" class="keybold">Interview Answer</text>
+<text x="625" y="515" class="key">"We trade freshness for availability</text>
+<text x="625" y="525" class="key">because stale KPIs &gt; missing KPIs."</text>
+</svg>

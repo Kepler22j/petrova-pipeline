@@ -135,7 +135,7 @@ alerts AS (
             ELSE 'OK'
         END AS alert_severity,
 
-        CURRENT_TIMESTAMP() AS _alert_generated_at
+        {{ dbt.current_timestamp() }} AS _alert_generated_at
 
     FROM with_lag
 )

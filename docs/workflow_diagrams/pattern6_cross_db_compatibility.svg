@@ -1,0 +1,37 @@
+<svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" style="background:white">
+<style>
+text{font-family:Arial,Helvetica,sans-serif}
+.title{font-size:18px;font-weight:bold;fill:#1a1a1a}
+.label{font-size:11px;fill:#1a1a1a}
+.small{font-size:10px;fill:#555}
+.keybold{font-size:10px;font-weight:bold;fill:#0C447C}
+.key{font-size:10px;fill:#1a1a1a}
+.arrow{fill:none;stroke:#444;stroke-width:1.5;marker-end:url(#ah6)}
+</style>
+<defs><marker id="ah6" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse"><polygon points="0 0, 10 3.5, 0 7" fill="#444"/></marker></defs>
+<text x="350" y="28" text-anchor="middle" class="title">PETROVA: Cross-Database Compatibility</text>
+<line x1="30" y1="38" x2="670" y2="38" stroke="#ddd"/>
+<rect x="30" y="55" width="140" height="45" rx="4" fill="#EDE9FE" stroke="#8B5CF6"/>
+<text x="100" y="73" text-anchor="middle" class="label" style="font-weight:bold">dbt SQL Models</text>
+<text x="100" y="86" text-anchor="middle" class="small">16 models, 1 codebase</text>
+<path d="M170,77 L220,77" class="arrow"/>
+<rect x="220" y="50" width="180" height="55" rx="6" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+<text x="310" y="68" text-anchor="middle" class="label" style="font-weight:bold">Cross-DB Macros</text>
+<text x="310" y="81" text-anchor="middle" class="small">dbt.current_timestamp()</text>
+<text x="310" y="93" text-anchor="middle" class="small">dbt.datediff() | generate_schema_name</text>
+<path d="M400,68 L460,55 L460,55" class="arrow"/>
+<path d="M400,88 L460,100" class="arrow"/>
+<rect x="460" y="40" width="180" height="35" rx="4" fill="#DBEAFE" stroke="#3B82F6"/>
+<text x="550" y="57" text-anchor="middle" class="label" style="font-weight:bold">PostgreSQL (dev)</text>
+<text x="550" y="70" text-anchor="middle" class="small">profiles.yml target: dev | Docker local</text>
+<rect x="460" y="85" width="180" height="35" rx="4" fill="#DCFCE7" stroke="#22C55E"/>
+<text x="550" y="102" text-anchor="middle" class="label" style="font-weight:bold">Snowflake (prod)</text>
+<text x="550" y="115" text-anchor="middle" class="small">profiles.yml target: prod | Cloud</text>
+<rect x="30" y="135" width="640" height="105" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="45" y="155" class="keybold">Key Macros</text>
+<text x="45" y="170" class="key">dbt.current_timestamp(): PG = now(), SF = current_timestamp()</text>
+<text x="45" y="185" class="key">dbt.datediff(): PG = age(), SF = datediff()</text>
+<text x="45" y="200" class="key">generate_schema_name(): maps bronze/silver/gold to correct schemas per target</text>
+<line x1="45" y1="210" x2="655" y2="210" stroke="#E2E8F0"/>
+<text x="45" y="225" class="keybold">Interview: "Write once, run anywhere. Same 16 models deploy to PostgreSQL for dev and Snowflake for prod. Zero code changes."</text>
+</svg>

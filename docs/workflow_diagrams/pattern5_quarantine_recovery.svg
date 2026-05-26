@@ -1,0 +1,46 @@
+<svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="background:white">
+<style>
+text{font-family:Arial,Helvetica,sans-serif}
+.title{font-size:18px;font-weight:bold;fill:#1a1a1a}
+.label{font-size:11px;fill:#1a1a1a}
+.small{font-size:10px;fill:#555}
+.keybold{font-size:10px;font-weight:bold;fill:#0C447C}
+.key{font-size:10px;fill:#1a1a1a}
+.arrow{fill:none;stroke:#444;stroke-width:1.5;marker-end:url(#ah5)}
+</style>
+<defs><marker id="ah5" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse"><polygon points="0 0, 10 3.5, 0 7" fill="#444"/></marker></defs>
+<text x="350" y="28" text-anchor="middle" class="title">PETROVA: Quarantine &amp; Recovery Flow</text>
+<line x1="30" y1="38" x2="670" y2="38" stroke="#ddd"/>
+<rect x="30" y="55" width="100" height="40" rx="4" fill="#FEF3C7" stroke="#F59E0B"/>
+<text x="80" y="73" text-anchor="middle" class="label" style="font-weight:bold">Bronze Raw</text>
+<text x="80" y="86" text-anchor="middle" class="small">400K rows</text>
+<path d="M130,75 L175,75" class="arrow"/>
+<rect x="175" y="55" width="130" height="40" rx="4" fill="#DBEAFE" stroke="#3B82F6"/>
+<text x="240" y="73" text-anchor="middle" class="label">3-Gate Validation</text>
+<text x="240" y="86" text-anchor="middle" class="small">schema+business+ref</text>
+<path d="M305,68 L370,68" class="arrow"/>
+<text x="335" y="62" style="font-size:10px;fill:#059669;font-weight:bold">PASS</text>
+<rect x="370" y="55" width="90" height="30" rx="4" fill="#DCFCE7" stroke="#22C55E"/>
+<text x="415" y="74" text-anchor="middle" class="label" style="font-weight:bold;fill:#059669">Silver</text>
+<path d="M240,95 L240,120" class="arrow"/>
+<text x="252" y="115" style="font-size:10px;fill:#DC2626;font-weight:bold">FAIL</text>
+<rect x="175" y="120" width="130" height="45" rx="4" fill="#FEE2E2" stroke="#F87171"/>
+<text x="240" y="138" text-anchor="middle" class="label" style="font-weight:bold">QUARANTINE</text>
+<text x="240" y="151" text-anchor="middle" class="small">reason + gate# + timestamp</text>
+<text x="240" y="161" text-anchor="middle" class="small">original data preserved</text>
+<path d="M305,142 L370,142" class="arrow"/>
+<rect x="370" y="125" width="100" height="40" rx="4" fill="#FEF3C7" stroke="#F59E0B"/>
+<text x="420" y="143" text-anchor="middle" class="label">Review Queue</text>
+<text x="420" y="156" text-anchor="middle" class="small">auto / manual</text>
+<path d="M470,135 L530,120" class="arrow"/>
+<path d="M470,152 L530,165" class="arrow"/>
+<rect x="530" y="108" width="120" height="28" rx="4" fill="#DCFCE7" stroke="#22C55E"/>
+<text x="590" y="126" text-anchor="middle" class="label">Fix source: Re-ingest</text>
+<rect x="530" y="148" width="120" height="28" rx="4" fill="#FEE2E2" stroke="#F87171"/>
+<text x="590" y="166" text-anchor="middle" class="label">Reject: Archive</text>
+<rect x="30" y="195" width="640" height="75" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="45" y="215" class="keybold">Key Concepts</text>
+<text x="45" y="230" class="key">Every rejected record is traceable: original data + failure reason + gate number + timestamp.</text>
+<text x="45" y="245" class="key">Recovery = fix source data, re-run pipeline. Zero data loss guarantee. Fail-safe, not fail-silent.</text>
+<text x="45" y="260" class="keybold">Interview: "Quarantine ensures zero data loss. Every failed record has a paper trail for audit."</text>
+</svg>

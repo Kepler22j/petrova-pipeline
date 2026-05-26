@@ -21,6 +21,6 @@ SELECT
     location,
     status,
     install_date
-FROM {{ source('raw', 'equipment_master_raw') }}
+FROM {{ source('raw', 'raw_equipment_master') }}
 
 {% endsnapshot %}

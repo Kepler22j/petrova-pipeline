@@ -24,7 +24,7 @@ ON tgt.{{ unique_key }} = src.{{ unique_key }}
 WHEN MATCHED AND tgt._row_hash != src._row_hash THEN
     UPDATE SET
         tgt.is_current = FALSE,
-        tgt.valid_to   = CURRENT_TIMESTAMP()
+        tgt.valid_to   = {{ dbt.current_timestamp() }}
 
 -- New row → insert
 WHEN NOT MATCHED THEN
@@ -36,7 +36,7 @@ WHEN NOT MATCHED THEN
     VALUES (
         src.{{ unique_key }},
         {% for col in tracked_columns %}src.{{ col }}{% if not loop.last %}, {% endif %}{% endfor %},
-        TRUE, CURRENT_TIMESTAMP(), '9999-12-31', src._row_hash
+        TRUE, {{ dbt.current_timestamp() }}, '9999-12-31', src._row_hash
     );
 
 {% endmacro %}

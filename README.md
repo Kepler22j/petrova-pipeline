@@ -330,6 +330,36 @@ Every component maps to at least one exam domain:
 | Unity Catalog | Governance | RBAC / Secure Views | - |
 | dbt Models & Tests | - | - | Full coverage |
 
+## Workflow Pattern Diagrams
+
+8 production workflow diagrams in `docs/workflow_diagrams/` — each with flow paths, decision logic, key concepts, and interview answers:
+
+| # | Pattern | Key Concept |
+|---|---------|-------------|
+| 1 | SLA Protection | `trigger_rule=all_done` + fallback snapshot |
+| 2 | 3-Gate Validation | Schema → Business → Referential with quarantine |
+| 3 | SPC Alert Engine | 3 primitives → 6 alerts → composite severity |
+| 4 | SCD Type 2 | Timestamp + Check strategies, cross-DB macro |
+| 5 | Quarantine & Recovery | Tagged records, zero data loss guarantee |
+| 6 | Cross-DB Compatibility | Write once, run on PostgreSQL + Snowflake |
+| 7 | Incremental Processing | Auto Loader + `is_incremental()` |
+| 8 | Local E2E Pipeline | Docker Compose → 6 services → 51/51 tests |
+
+## Controlled Trade-offs
+
+Every design decision has a documented mitigation:
+
+| Trade-off | Risk Level | Controlled? | Mitigation |
+|-----------|-----------|-------------|------------|
+| Complexity | High | Yes | One-command setup (`make run`) |
+| Alert Fatigue | Medium | Yes | Composite severity (3 levels) |
+| Logic Duplication | Medium | Yes | dbt = single source of truth |
+| Ghost Success | High | Yes | Freshness flag + PagerDuty |
+| Cost | Medium | Yes | Auto-suspend + daily batch |
+| Latency | Low | Intentional | 400K/day doesn't justify streaming |
+| Cascade Failure | Low | Expected | Fail-fast over silent corruption |
+| Skill Requirement | Medium | Org-dependent | Hiring criteria, not system flaw |
+
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.

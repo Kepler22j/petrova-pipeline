@@ -17,7 +17,6 @@ metrics:
     type: simple
     type_params:
       measure: total_revenue
-    time_grains: [day, week, month, quarter, year]
 
   - name: pipeline_quality_score
     label: "Pipeline Quality Score"

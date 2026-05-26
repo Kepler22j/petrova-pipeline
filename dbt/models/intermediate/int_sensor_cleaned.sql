@@ -37,7 +37,7 @@ validated AS (
             THEN TRUE ELSE FALSE
         END AS is_valid,
 
-        CURRENT_TIMESTAMP() AS _silver_loaded_at
+        {{ dbt.current_timestamp() }} AS _silver_loaded_at
     FROM source
 )
 

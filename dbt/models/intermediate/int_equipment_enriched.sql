@@ -24,14 +24,14 @@ enriched AS (
         loaded_at,
 
         -- Derived fields
-        DATEDIFF('day', install_date, CURRENT_DATE()) AS days_since_install,
+        {{ dbt.datediff('install_date', dbt.current_timestamp(), 'day') }} AS days_since_install,
         CASE
-            WHEN DATEDIFF('year', install_date, CURRENT_DATE()) > 10 THEN 'AGING'
+            WHEN {{ dbt.datediff('install_date', dbt.current_timestamp(), 'year') }} > 10 THEN 'AGING'
             WHEN status = 'DECOMMISSIONED' THEN 'RETIRED'
             ELSE 'ACTIVE'
         END AS lifecycle_stage,
 
-        CURRENT_TIMESTAMP() AS _silver_loaded_at
+        {{ dbt.current_timestamp() }} AS _silver_loaded_at
     FROM source
 )
 

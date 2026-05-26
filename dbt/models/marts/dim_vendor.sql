@@ -18,5 +18,5 @@ SELECT
     is_current,
     valid_from,
     valid_to,
-    CURRENT_TIMESTAMP() AS _gold_loaded_at
+    {{ dbt.current_timestamp() }} AS _gold_loaded_at
 FROM {{ ref('scd2_vendors') }}

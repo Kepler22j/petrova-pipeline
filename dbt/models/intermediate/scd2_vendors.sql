@@ -4,7 +4,7 @@
     unique_key='vendor_sk',
     tags=['silver', 'scd2', 'vendors'],
     post_hook=[
-        "UPDATE {{ this }} SET is_current = FALSE, valid_to = CURRENT_TIMESTAMP()
+        "UPDATE {{ this }} SET is_current = FALSE, valid_to = {{ dbt.current_timestamp() }}
          WHERE vendor_number IN (
             SELECT vendor_number FROM {{ this }}
             GROUP BY vendor_number HAVING COUNT(*) > 1
@@ -37,7 +37,7 @@ hashed AS (
         TRUE AS is_current,
         loaded_at AS valid_from,
         CAST('9999-12-31' AS TIMESTAMP) AS valid_to,
-        CURRENT_TIMESTAMP() AS _silver_loaded_at
+        {{ dbt.current_timestamp() }} AS _silver_loaded_at
     FROM source
 )
 

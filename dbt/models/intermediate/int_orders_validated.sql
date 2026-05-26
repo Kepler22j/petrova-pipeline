@@ -41,6 +41,8 @@ enriched AS (
         o.order_type,
         o.equipment_id,
         o.order_date,
+        o.order_quantity,
+        o.net_value,
         o.status,
         o.priority,
         o.created_by,
@@ -62,9 +64,9 @@ enriched AS (
         END AS quality_flag,
 
         -- Derived: days since order
-        DATEDIFF('day', o.order_date, CURRENT_DATE()) AS days_since_order,
+        {{ dbt.datediff('o.order_date', dbt.current_timestamp(), 'day') }} AS days_since_order,
 
-        CURRENT_TIMESTAMP() AS _silver_loaded_at
+        {{ dbt.current_timestamp() }} AS _silver_loaded_at
 
     FROM deduped o
     LEFT JOIN {{ ref('stg_equipment_master') }} e

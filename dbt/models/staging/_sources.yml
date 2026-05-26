@@ -3,8 +3,7 @@ version: 2
 sources:
   - name: raw
     description: "Raw data from PETROVA ingestion pipeline"
-    database: PETROVA_DW
-    schema: PUBLIC
+    schema: "{{ 'PUBLIC' if target.type == 'snowflake' else 'public' }}"
     tables:
       - name: sensor_readings_parquet
         description: "Sensor readings from CSV files via ADF Parquet pipeline"

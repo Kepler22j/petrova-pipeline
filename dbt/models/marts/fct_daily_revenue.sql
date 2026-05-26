@@ -33,7 +33,7 @@ daily_rev AS (
         SUM(CASE WHEN quality_flag = 'WARN' THEN 1 ELSE 0 END) AS warn_count,
         COUNT(*)                            AS total_records,
 
-        CURRENT_TIMESTAMP()                 AS _gold_loaded_at
+        {{ dbt.current_timestamp() }}                 AS _gold_loaded_at
     FROM valid_orders
     GROUP BY 1, 2, 3, 4
 )

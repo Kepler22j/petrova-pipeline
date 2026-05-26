@@ -1,0 +1,12 @@
+petrova_pipeline:
+  target: local
+  outputs:
+    local:
+      type: postgres
+      host: "{{ env_var('DBT_PG_HOST', 'localhost') }}"
+      port: 5432
+      user: "{{ env_var('DBT_PG_USER', 'petrova') }}"
+      password: "{{ env_var('DBT_PG_PASSWORD', 'petrova') }}"
+      dbname: petrova
+      schema: public
+      threads: 4

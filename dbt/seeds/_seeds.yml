@@ -20,3 +20,52 @@ seeds:
     columns:
       - name: status_code
         tests: [unique, not_null]
+
+  # ── Raw source seeds (for local PostgreSQL testing) ──
+  - name: sensor_readings_parquet
+    description: "Seed: IoT sensor readings (50 rows, 5 sensors, 2 days)"
+    config:
+      schema: public
+      column_types:
+        sensor_id: varchar(20)
+        reading_value: float
+        reading_timestamp: timestamp
+        _loaded_at: timestamp
+
+  - name: raw_sap_orders
+    description: "Seed: SAP maintenance orders (20 rows, mixed statuses)"
+    config:
+      schema: public
+      column_types:
+        order_id: varchar(20)
+        equipment_id: varchar(10)
+        material_id: varchar(10)
+        order_date: date
+        order_quantity: integer
+        net_value: float
+        _loaded_at: timestamp
+
+  - name: raw_equipment_master
+    description: "Seed: Equipment registry (10 assets, 1 decommissioned)"
+    config:
+      schema: public
+      column_types:
+        equipment_id: varchar(10)
+        install_date: date
+        _loaded_at: timestamp
+
+  - name: raw_sap_materials
+    description: "Seed: SAP material master (8 materials)"
+    config:
+      schema: public
+      column_types:
+        material_id: varchar(10)
+        _loaded_at: timestamp
+
+  - name: raw_sap_vendors
+    description: "Seed: SAP vendor master (8 vendors)"
+    config:
+      schema: public
+      column_types:
+        vendor_id: varchar(10)
+        _loaded_at: timestamp

@@ -63,3 +63,59 @@ Use this to ground every answer in production experience:
 - 99.5% SLA
 - Offshore oil rig platforms
 - Predictive maintenance preventing equipment failure
+
+## 8 Controlled Trade-offs (Con → Resolution)
+
+Every interviewer will probe for weaknesses. Here's how to own them:
+
+1. **Complexity** → "One `make run` command spins up 6 Docker services. Zero tribal knowledge."
+2. **Alert Fatigue** → "Composite severity reduces 6 alert types to 3 action levels (OK/WARNING/CRITICAL)."
+3. **Logic Duplication** → "Spark ingests, dbt transforms — no business logic overlap. dbt is the single source of truth."
+4. **Ghost Success** → "Fallback flag + freshness indicator + PagerDuty catches stale data within 5 minutes."
+5. **Cost / FinOps** → "Auto-suspend warehouse + daily batch = pay only for compute that runs."
+6. **Data Latency** → "400K rows/day doesn't justify streaming infrastructure cost. Intentional batch design."
+7. **Cascade Failure** → "Fail-fast is intentional — visible failure over silent data corruption."
+8. **Skill Dependency** → "That's a hiring criteria, not a system flaw."
+
+Master insight: "A senior engineer doesn't eliminate trade-offs — they make them visible, controlled, and reversible."
+
+## Dream11 Architecture Comparison (Interview Defense)
+
+When asked "how does this compare to real-world platforms?":
+
+- Dream11: 200M users, Kafka + Flink + KSQL + Redshift + Neptune + Druid + Elasticsearch. 15+ technologies.
+- PETROVA: IoT sensors, ADF + Spark + dbt + Snowflake + Airflow. 8 core technologies.
+- Key difference: Dream11 optimizes for **real-time at consumer scale**. PETROVA optimizes for **data quality at industrial IoT scale**.
+- PETROVA advantage: 3-Gate validation, 51 dbt tests, SPC alerts, cross-database portability. Dream11 shows no quality layer.
+- Answer: "Streaming was avoided because 400K/day doesn't justify Kafka + Flink cost. If volume grew to 10M+/day, we'd add Kafka between ADF and Bronze — the medallion architecture supports that upgrade without redesigning downstream."
+
+## Certification Alignment
+
+| Cert | Key Topics You Built | Status |
+|------|---------------------|--------|
+| **Databricks DE Associate** | Delta Lake, Auto Loader, Spark, Clusters, Jobs, Unity Catalog | Code complete |
+| **SnowPro Core (COF-C03)** | Warehouses, Time Travel, Zero-Copy Clone, Streams, Tasks, RBAC | DDLs written |
+| **dbt Analytics Engineer** | Models, Tests, Snapshots, Macros, Incremental, Sources, Lineage | 51 tests pass |
+
+## Workflow Patterns (8 Interview Diagrams)
+
+Located in `docs/workflow_diagrams/`:
+
+1. **SLA Protection** — trigger_rule=all_done + fallback snapshot + freshness indicator
+2. **3-Gate Validation** — schema → business → referential with quarantine per gate
+3. **SPC Alert Engine** — 3 primitives (STDDEV, LAG, THRESHOLD) → 6 alerts → composite severity
+4. **SCD Type 2** — timestamp + check strategies + cross-DB scd2_merge macro
+5. **Quarantine & Recovery** — tagged records with reason + gate# + timestamp, zero data loss
+6. **Cross-DB Compatibility** — dbt macros: write once, run on PostgreSQL (dev) + Snowflake (prod)
+7. **Incremental Processing** — Auto Loader + is_incremental() + full refresh fallback
+8. **Local E2E Pipeline** — Docker Compose → 6 services → dbt seed/run/test → 51/51 PASS
+
+## dbt Cert Exam — UI Topics to Study
+
+These are tested on the dbt Analytics Engineer exam but not in your codebase:
+
+- **Cloud IDE**: lineage tab, compiled code tab, command bar selectors (+model, tag:, source:)
+- **Version control in Cloud**: branch → commit → PR → merge flow
+- **Job scheduler**: scheduled jobs, CI on PR, slim CI
+- **Defer to production**: dev reads unmodified models from prod tables
+- **dbt docs generate**: lineage graph visualization, documentation site

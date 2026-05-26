@@ -1,0 +1,75 @@
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" style="background:white">
+<style>
+text{font-family:Arial,Helvetica,sans-serif}
+.title{font-size:18px;font-weight:bold;fill:#1a1a1a}
+.label{font-size:11px;fill:#1a1a1a}
+.small{font-size:10px;fill:#555}
+.keybold{font-size:10px;font-weight:bold;fill:#0C447C}
+.key{font-size:10px;fill:#1a1a1a}
+.arrow{fill:none;stroke:#444;stroke-width:1.5;marker-end:url(#ah3)}
+</style>
+<defs><marker id="ah3" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse"><polygon points="0 0, 10 3.5, 0 7" fill="#444"/></marker></defs>
+<text x="450" y="28" text-anchor="middle" class="title">PETROVA: SPC Alert Engine (6 Alerts from 3 Primitives)</text>
+<line x1="30" y1="38" x2="870" y2="38" stroke="#ddd"/>
+<rect x="350" y="50" width="200" height="45" rx="6" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+<text x="450" y="70" text-anchor="middle" class="label" style="font-weight:bold">fct_daily_sensor_kpi</text>
+<text x="450" y="83" text-anchor="middle" class="small">avg, stddev, min, max, count per sensor/day</text>
+<path d="M370,95 L200,130" class="arrow"/>
+<path d="M450,95 L450,130" class="arrow"/>
+<path d="M530,95 L700,130" class="arrow"/>
+<rect x="120" y="130" width="160" height="42" rx="6" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
+<text x="200" y="148" text-anchor="middle" class="label" style="font-weight:bold">STDDEV</text>
+<text x="200" y="163" text-anchor="middle" class="small">Distribution spread</text>
+<rect x="370" y="130" width="160" height="42" rx="6" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
+<text x="450" y="148" text-anchor="middle" class="label" style="font-weight:bold">LAG</text>
+<text x="450" y="163" text-anchor="middle" class="small">Point-to-point change</text>
+<rect x="620" y="130" width="160" height="42" rx="6" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="2"/>
+<text x="700" y="148" text-anchor="middle" class="label" style="font-weight:bold">THRESHOLD</text>
+<text x="700" y="163" text-anchor="middle" class="small">Business limits</text>
+<path d="M160,172 L100,205" class="arrow"/>
+<rect x="30" y="205" width="140" height="50" rx="4" fill="#DBEAFE" stroke="#60A5FA"/>
+<text x="100" y="222" text-anchor="middle" class="label" style="font-weight:bold">1. STABILITY</text>
+<text x="100" y="235" text-anchor="middle" class="small">stddev &lt; 5 = STABLE</text>
+<text x="100" y="247" text-anchor="middle" class="small">stddev &gt; 25 = UNSTABLE</text>
+<path d="M240,172 L300,205" class="arrow"/>
+<rect x="230" y="205" width="140" height="50" rx="4" fill="#DBEAFE" stroke="#60A5FA"/>
+<text x="300" y="222" text-anchor="middle" class="label" style="font-weight:bold">2. SIGNAL NOISE</text>
+<text x="300" y="235" text-anchor="middle" class="small">CV = stddev/avg</text>
+<text x="300" y="247" text-anchor="middle" class="small">CV &gt; 0.3 = NOISY</text>
+<path d="M200,172 L200,275 L100,275 L100,280" class="arrow"/>
+<rect x="30" y="280" width="140" height="42" rx="4" fill="#DBEAFE" stroke="#60A5FA"/>
+<text x="100" y="297" text-anchor="middle" class="label" style="font-weight:bold">3. OUTLIER</text>
+<text x="100" y="312" text-anchor="middle" class="small">reading &gt; avg + 2*stddev</text>
+<rect x="230" y="280" width="140" height="42" rx="4" fill="#DBEAFE" stroke="#60A5FA"/>
+<text x="300" y="297" text-anchor="middle" class="label" style="font-weight:bold">4. RANGE</text>
+<text x="300" y="312" text-anchor="middle" class="small">outside avg +/- 1 stddev</text>
+<path d="M300,255 L300,280" class="arrow"/>
+<path d="M450,172 L450,205" class="arrow"/>
+<rect x="380" y="205" width="140" height="50" rx="4" fill="#DCFCE7" stroke="#4ADE80"/>
+<text x="450" y="222" text-anchor="middle" class="label" style="font-weight:bold">5. VOLATILITY</text>
+<text x="450" y="235" text-anchor="middle" class="small">stddev &gt; prev * 1.5</text>
+<text x="450" y="247" text-anchor="middle" class="small">= DEGRADING trend</text>
+<path d="M700,172 L700,205" class="arrow"/>
+<rect x="615" y="205" width="170" height="50" rx="4" fill="#EDE9FE" stroke="#A78BFA"/>
+<text x="700" y="222" text-anchor="middle" class="label" style="font-weight:bold">6. SPIKE DETECTION</text>
+<text x="700" y="235" text-anchor="middle" class="small">|max - prev_max| &gt; 2*stddev</text>
+<text x="700" y="247" text-anchor="middle" class="small">= SPIKE or SHIFT</text>
+<path d="M100,322 L100,360 L380,370" class="arrow"/>
+<path d="M300,322 L300,360 L380,370" class="arrow"/>
+<path d="M450,255 L450,340 L450,370" class="arrow"/>
+<path d="M700,255 L700,340 L520,370" class="arrow"/>
+<rect x="350" y="360" width="200" height="50" rx="6" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+<text x="450" y="380" text-anchor="middle" class="label" style="font-weight:bold">COMPOSITE SEVERITY</text>
+<text x="450" y="395" text-anchor="middle" class="small">OK: WARNING: CRITICAL</text>
+<path d="M350,390 L230,430" class="arrow"/>
+<path d="M450,410 L450,430" class="arrow"/>
+<path d="M550,390 L670,430" class="arrow"/>
+<rect x="160" y="430" width="130" height="30" rx="4" fill="#DCFCE7" stroke="#22C55E"/>
+<text x="225" y="450" text-anchor="middle" class="label" style="fill:#059669;font-weight:bold">OK: No action</text>
+<rect x="385" y="430" width="130" height="30" rx="4" fill="#FEF3C7" stroke="#F59E0B"/>
+<text x="450" y="450" text-anchor="middle" class="label" style="fill:#92400E;font-weight:bold">WARNING: Log</text>
+<rect x="610" y="430" width="140" height="30" rx="4" fill="#FEE2E2" stroke="#EF4444"/>
+<text x="680" y="450" text-anchor="middle" class="label" style="fill:#DC2626;font-weight:bold">CRITICAL: Alert</text>
+<rect x="30" y="475" width="840" height="20" rx="3" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="450" y="489" text-anchor="middle" class="key" style="font-weight:bold">Interview: "SPC since Shewhart 1924. 3 primitives, 6 interpretations, 1 composite score."</text>
+</svg>

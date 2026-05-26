@@ -19,5 +19,5 @@ SELECT
     status,
     days_since_install,
     lifecycle_stage,
-    CURRENT_TIMESTAMP() AS _gold_loaded_at
+    {{ dbt.current_timestamp() }} AS _gold_loaded_at
 FROM {{ ref('int_equipment_enriched') }}
