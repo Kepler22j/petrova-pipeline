@@ -231,7 +231,10 @@ petrova-pipeline/
 │   └── runbooks/           #   Incident response procedures
 ├── great_expectations/     # Data quality suites & checkpoints
 ├── monitoring/             # PagerDuty config, notification procedures
-├── scripts/                # Backup (Zero-Copy Clone), env validation
+├── scripts/                # Test generators, backup, env validation
+│   ├── simulate_hourly_drops.py  # IoT sensor batch simulator (400K records)
+│   ├── chaos_test.py             # 8 chaos tests for 3-Gate resilience
+│   └── generate_sap_load.py      # PySpark 10-20 GB load generator
 ├── snowflake/
 │   ├── ddl/                #   Warehouses, schemas, all table DDL (Bronze/Silver/Gold)
 │   ├── procedures/         #   MERGE procedures, Gold immutability checks
@@ -344,6 +347,38 @@ Every component maps to at least one exam domain:
 | 6 | Cross-DB Compatibility | Write once, run on PostgreSQL + Snowflake |
 | 7 | Incremental Processing | Auto Loader + `is_incremental()` |
 | 8 | Local E2E Pipeline | Docker Compose → 6 services → 51/51 tests |
+
+## Testing (4-Level Pyramid)
+
+| Level | Scope | Tool | Data Size |
+|-------|-------|------|-----------|
+| **L1 — Unit** | dbt seeds + model tests | `dbt test` (51 tests) | ~1K rows |
+| **L2 — Integration** | Docker Compose full pipeline | `make docker-up` → E2E | ~10K rows |
+| **L3 — Load** | PySpark on Databricks | `generate_sap_load.py` | 10-20 GB (50M rows) |
+| **L4 — Chaos** | Intentionally broken data | `chaos_test.py` | 8 failure scenarios |
+
+### Test Scripts (`scripts/`)
+
+**`simulate_hourly_drops.py`** — Generates synthetic IoT sensor batches (400K records) with realistic distributions: 50 equipment units, 4 sensor types, 95% PASS / 3% WARN / 2% FAIL. Supports `--continuous` mode for hourly drops.
+
+**`chaos_test.py`** — 8 chaos tests targeting each gate: missing columns, wrong types, all nulls, duplicates, late-arriving data, empty files, extreme outliers (100x normal), negative values. Expected catch mapping: Gate 1 (tests 1,2,3,6), Gate 2 (tests 4,5,8), Gate 3 (test 7).
+
+**`generate_sap_load.py`** — Dual-mode generator: PySpark (Databricks, 50M+ rows for 10-20 GB load tests) and pandas (local, up to 5M rows). Generates SAP orders, materials master, and IoT sensor readings at scale.
+
+```bash
+# Generate sensor batch (local)
+python scripts/simulate_hourly_drops.py --records 100000
+
+# Run chaos tests
+python scripts/chaos_test.py --test 1 3 5
+
+# Generate SAP load (local/pandas)
+python scripts/generate_sap_load.py --rows 1000000 --output data/landing/sap/
+
+# Generate SAP load (Databricks/PySpark — 10-15 GB)
+# df = generate_sap_orders_spark(spark, 50_000_000)
+# df.write.parquet("/mnt/landing/sap_orders_full/")
+```
 
 ## Controlled Trade-offs
 
