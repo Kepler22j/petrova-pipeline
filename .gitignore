@@ -62,3 +62,12 @@ profiles.yml
 *.docx
 *.xlsx
 *.pptx
+
+# Local data zone — keep small Gold demo CSVs (dashboard needs them),
+# ignore bulk landing files + any generated Parquet
+data/landing/
+data/raw/
+data/**/*.parquet
+
+# Claude Code local tooling (dev preview config)
+.claude/

@@ -386,7 +386,8 @@ DROP TABLE PETROVA_DEV.BRONZE.TT_TEST_RECOVERED;
 
 ```sql
 -- Exercise 6.1: Clone a table (instant, zero storage cost initially)
-CREATE TABLE PETROVA_DEV.BRONZE.SENSOR_CLONE
+-- OR REPLACE makes this re-runnable (safe to run multiple times)
+CREATE OR REPLACE TABLE PETROVA_DEV.BRONZE.SENSOR_CLONE
     CLONE PETROVA_PROD.BRONZE.SENSOR_READINGS_PARQUET;
 
 -- Exercise 6.2: Verify clone is independent

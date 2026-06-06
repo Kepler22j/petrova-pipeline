@@ -1,22 +1,44 @@
+# PETROVA dbt profiles — copy to ~/.dbt/profiles.yml (or keep here and use --profiles-dir .)
+# All connection values come from environment variables (.env). Nothing secret lives in this file.
+#   dev        -> Snowflake PETROVA_DEV  (default target)
+#   prod       -> Snowflake PETROVA_PROD
+#   databricks -> Databricks (Unity Catalog)
+#
+# Run:  dbt run --target dev     |     dbt run --target prod     |     dbt run --target databricks
+
 petrova_pipeline:
   target: dev
   outputs:
+
     dev:
       type: snowflake
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
       user: "{{ env_var('SNOWFLAKE_USER') }}"
       password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
-      role: DATA_ADMIN
-      database: PETROVA_DW
-      warehouse: PETROVA_WH
-      schema: PUBLIC
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'PETROVA_ENGINEER') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE', 'PETROVA_DEV') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'PETROVA_DEV_WH') }}"
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'PUBLIC') }}"
       threads: 4
-      client_session_keep_alive: False
+      client_session_keep_alive: false
+
+    prod:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'PETROVA_ADMIN') }}"
+      database: PETROVA_PROD
+      warehouse: PETROVA_PROD_WH
+      schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'PUBLIC') }}"
+      threads: 8
+      client_session_keep_alive: false
 
     databricks:
       type: databricks
       host: "{{ env_var('DBT_DATABRICKS_HOST') }}"
       http_path: "{{ env_var('DBT_DATABRICKS_HTTP_PATH') }}"
       token: "{{ env_var('DBT_DATABRICKS_TOKEN') }}"
-      schema: petrova_dev
+      catalog: "{{ env_var('DBT_DATABRICKS_CATALOG', 'petrova') }}"
+      schema: "{{ env_var('DBT_DATABRICKS_SCHEMA', 'petrova_dev') }}"
       threads: 4

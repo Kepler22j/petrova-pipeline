@@ -1,0 +1,7 @@
+equipment_sk,equipment_id,equipment_name,equipment_type,location,install_date,status,days_since_install,lifecycle_stage
+05d4fba4b1146e2236988dfb42640d82,EQ-1011,P-101A Crude Transfer Pump,Centrifugal Pump,Separation Train,2018-04-01,ACTIVE,2800,END_OF_LIFE
+4b3c4213455b99524e256a37400ad06a,EQ-2010,K-201 Gas Compressor,Centrifugal Compressor,Gas Compression,2023-08-12,ACTIVE,841,MATURE
+1649c3ee5868b2d27400237bfbc2bffe,EQ-3015,E-301 Heat Exchanger,Shell & Tube HX,Separation Train,2016-09-30,ACTIVE,3348,END_OF_LIFE
+98863fbc0ea61377dffef463107b51f8,EQ-4002,V-401 Production Separator,3-Phase Separator,Wellhead Platform,2022-04-11,ACTIVE,1329,MATURE
+317bf0a33472ce8124d4ada74b550767,EQ-1022,P-102B Water Injection Pump,Reciprocating Pump,Water Injection,2018-04-04,ACTIVE,2797,END_OF_LIFE
+0dc5b6056e31dcad57652f71612800c7,EQ-5008,C-501 Export Gas Compressor,Axial Compressor,Gas Export,2020-10-27,ACTIVE,1860,MATURE

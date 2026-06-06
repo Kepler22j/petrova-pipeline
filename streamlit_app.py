@@ -29,8 +29,57 @@ np.random.seed(42)
 # ═══════════════════════════════════════
 # GENERATE DEMO DATA
 # ═══════════════════════════════════════
+import os
+from pathlib import Path
+_GOLD_DIR = Path(__file__).parent / "data" / "gold"
+
+
+def _snowflake_gold(table):
+    """Tier 1 — live Gold table from Snowflake if creds + driver present, else None."""
+    if not os.environ.get("SNOWFLAKE_ACCOUNT"):
+        return None
+    try:
+        import snowflake.connector
+        conn = snowflake.connector.connect(
+            account=os.environ["SNOWFLAKE_ACCOUNT"],
+            user=os.environ["SNOWFLAKE_USER"],
+            password=os.environ["SNOWFLAKE_PASSWORD"],
+            role=os.environ.get("SNOWFLAKE_ROLE", "PETROVA_READER"),
+            warehouse=os.environ.get("SNOWFLAKE_WAREHOUSE", "PETROVA_PROD_WH"),
+            database=os.environ.get("SNOWFLAKE_DATABASE", "PETROVA_PROD"),
+        )
+        cur = conn.cursor()
+        cur.execute(f"SELECT * FROM PETROVA_PROD.GOLD.{table}")
+        out = cur.fetch_pandas_all()
+        conn.close()
+        out.columns = [c.lower() for c in out.columns]
+        return out
+    except Exception:
+        return None
+
+
+def data_source_mode():
+    """Cheap badge for the sidebar — Live / Demo CSV / Synthetic."""
+    if os.environ.get("SNOWFLAKE_ACCOUNT"):
+        try:
+            import snowflake.connector  # noqa: F401
+            return "🟢 Live (Snowflake)"
+        except Exception:
+            pass
+    if (_GOLD_DIR / "fct_daily_sensor_kpi.csv").exists():
+        return "🟡 Demo (Gold CSV)"
+    return "⚪ Synthetic (generated)"
+
+
 @st.cache_data
 def generate_sensor_data():
+    # Tier 1 Snowflake -> Tier 2 generated Gold CSV -> Tier 3 synthesize
+    live = _snowflake_gold("FCT_DAILY_SENSOR_KPI")
+    if live is not None:
+        return live.rename(columns={"kpi_date": "date"})
+    _gold = _GOLD_DIR / "fct_daily_sensor_kpi.csv"
+    if _gold.exists():
+        return pd.read_csv(_gold, parse_dates=["kpi_date"]).rename(columns={"kpi_date": "date"})
     dates = pd.date_range("2025-11-01", "2025-12-31", freq="D")
     sensors = ["S001-Vibration", "S002-Temperature", "S003-Pressure", "S004-Flow", "S005-RPM"]
     rows = []
@@ -52,6 +101,14 @@ def generate_sensor_data():
 
 @st.cache_data
 def generate_alert_data(df):
+    _ren = {"kpi_date": "date", "stability_level": "stability",
+            "coefficient_of_variation": "cv", "alert_severity": "severity"}
+    live = _snowflake_gold("FCT_SENSOR_ALERTS")
+    if live is not None:
+        return live.rename(columns=_ren)
+    _gold = _GOLD_DIR / "fct_sensor_alerts.csv"
+    if _gold.exists():
+        return pd.read_csv(_gold, parse_dates=["kpi_date"]).rename(columns=_ren)
     alerts = []
     for _, r in df.iterrows():
         stability = "STABLE" if r["stddev_reading"] < 5 else ("NORMAL" if r["stddev_reading"] <= 25 else "UNSTABLE")
@@ -96,6 +153,7 @@ pipeline_df = generate_pipeline_runs()
 st.sidebar.image("https://raw.githubusercontent.com/Kepler22j/petrova-pipeline/main/docs/logo.png", width=60) if False else None
 st.sidebar.title("PETROVA Pipeline")
 st.sidebar.caption("Production Data Platform Monitor")
+st.sidebar.caption(f"Data source: {data_source_mode()}")
 st.sidebar.markdown("---")
 
 page = st.sidebar.radio("Navigate", ["Pipeline Overview", "Data Quality & SPC", "Architecture"])

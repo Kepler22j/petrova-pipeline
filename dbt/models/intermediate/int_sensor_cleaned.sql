@@ -24,18 +24,10 @@ validated AS (
         process_area,
         loaded_at,
 
-        -- Silver Gate: quality flags
-        CASE
-            WHEN reading_value IS NULL THEN 'FAIL'
-            WHEN reading_value < -999 OR reading_value > 9999 THEN 'WARN'
-            ELSE 'PASS'
-        END AS quality_flag,
-
-        CASE
-            WHEN reading_value IS NOT NULL
-                 AND reading_value BETWEEN -999 AND 9999
-            THEN TRUE ELSE FALSE
-        END AS is_valid,
+        -- Silver Gate: quality flag via the 3-gate framework macro
+        -- (warn band [-999, 9999]; NULL -> FAIL). See macros/three_gate_validation.sql
+        {{ silver_quality_flag('reading_value', -999, 9999) }} AS quality_flag,
+        {{ silver_is_valid('reading_value', -999, 9999) }} AS is_valid,
 
         {{ dbt.current_timestamp() }} AS _silver_loaded_at
     FROM source
