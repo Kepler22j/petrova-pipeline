@@ -159,7 +159,8 @@ st.sidebar.markdown("---")
 page = st.sidebar.radio("Navigate", ["Pipeline Overview", "Data Quality & SPC", "Architecture"])
 st.sidebar.markdown("---")
 st.sidebar.markdown("**Built by Jay Pechnarai**")
-st.sidebar.markdown("[GitHub](https://github.com/Kepler22j/petrova-pipeline) · [LinkedIn](https://linkedin.com/in/jay-pechnarai-4001986b)")
+st.sidebar.caption("Senior Data Platform Engineer · Data Architect")
+st.sidebar.markdown("[GitHub](https://github.com/Kepler22j/petrova-pipeline) · [LinkedIn](https://linkedin.com/in/jakapong-pechnarai-4001986b)")
 st.sidebar.caption("Snowflake · Databricks · dbt · Airflow")
 
 # ═══════════════════════════════════════
@@ -327,6 +328,24 @@ elif page == "Data Quality & SPC":
 elif page == "Architecture":
     st.title("PETROVA Architecture")
     st.caption("9-Layer Production Data Platform | 400K+ Records/Day")
+
+    st.markdown("---")
+
+    # ── Final-result visual report: architecture image + presentation deck ──
+    _assets = Path(__file__).parent / "assets"
+    _arch = _assets / "petrova_architecture.png"
+    if _arch.exists():
+        st.image(str(_arch), use_container_width=True, caption="PETROVA — end-to-end architecture")
+    _deck = sorted((_assets / "deck").glob("Slide*.PNG"),
+                   key=lambda p: int("".join(c for c in p.stem if c.isdigit()) or 0))
+    if _deck:
+        st.subheader("📊 Presentation Deck")
+        n = st.slider("Slide", 1, len(_deck), 1) if len(_deck) > 1 else 1
+        st.image(str(_deck[n - 1]), use_container_width=True)
+    _pdf = _assets / "PETROVA_Presentation.pdf"
+    if _pdf.exists():
+        st.download_button("⬇️  Download full deck (PDF)", _pdf.read_bytes(),
+                           file_name="PETROVA_Presentation.pdf", mime="application/pdf")
 
     st.markdown("---")
 
