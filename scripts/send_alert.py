@@ -26,7 +26,7 @@ import pandas as pd
 
 ALERTS_CSV = Path(__file__).resolve().parent.parent / "data" / "gold" / "fct_sensor_alerts.csv"
 LOG_DIR = Path(__file__).resolve().parent.parent / "Logs"
-ALERT_TO = os.environ.get("ALERT_TO", "zjakapong.p@pttdigital.com")
+ALERT_TO = os.environ.get("ALERT_TO", "pechnarai.jakapong@gmail.com")
 
 
 def build_alert():

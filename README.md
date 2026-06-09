@@ -404,5 +404,5 @@ MIT License. See [LICENSE](LICENSE) for details.
 <div align="center">
 <strong>PETROVA — Production-Grade Data Platform</strong><br>
 <em>Spark · Databricks · dbt · Snowflake · Delta Lake · Airflow · Terraform · SPC Monitoring</em><br>
-<em>By Jay Pechnarai — Senior Data Platform Engineer · 15+ Years Mission-Critical Systems</em>
+<em>By Jay Pechnarai — Senior Data Platform Engineer · 20+ Years Mission-Critical Systems</em>
 </div>

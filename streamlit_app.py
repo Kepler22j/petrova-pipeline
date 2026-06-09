@@ -420,4 +420,4 @@ elif page == "Architecture":
     st.markdown("Snowflake · Databricks · dbt Core · Apache Airflow · PySpark · Delta Lake · Azure Data Factory · SSIS · Power BI · Streamlit · Docker · Terraform · Great Expectations · PagerDuty")
 
     st.markdown("---")
-    st.markdown("**Built by Jay Pechnarai** · [GitHub](https://github.com/Kepler22j/petrova-pipeline) · [LinkedIn](https://linkedin.com/in/jay-pechnarai-4001986b)")
+    st.markdown("**Built by Jay Pechnarai** · [GitHub](https://github.com/Kepler22j/petrova-pipeline) · [LinkedIn](https://linkedin.com/in/jakapong-pechnarai-4001986b)")
