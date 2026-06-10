@@ -70,6 +70,22 @@ Built with a **security-first mindset** (4-role RBAC, AES-256, TLS 1.2+, Azure K
 
 > Full interactive SVG diagram: [`docs/architecture/PETROVA_Architecture.svg`](docs/architecture/PETROVA_Architecture.svg)
 
+## Documentation
+
+Full docs in [`docs/`](docs/). **Start here:** [`PETROVA_SYSTEM_MANUAL.md`](docs/PETROVA_SYSTEM_MANUAL.md) — architecture · data architecture · application design · operations.
+
+| Doc | Purpose |
+|-----|---------|
+| [System Manual](docs/PETROVA_SYSTEM_MANUAL.md) ⭐ | master: architecture + data architecture + app design + ops |
+| [End-to-End Workflow](docs/END_TO_END_WORKFLOW.md) | source → consumption flow + Airflow DAG |
+| [Ingestion: Static vs Dynamic](docs/STATIC_VS_DYNAMIC_INGESTION.md) | 10 ingestion sources, tool per velocity |
+| [Silver Transformations](docs/SILVER_TRANSFORMATIONS.md) | 10 Silver transforms (SQL) |
+| [Senior DE End-to-End](docs/SENIOR_DE_END_TO_END.md) | full-stack non-CLI + senior decisions |
+| [Non-CLI Setup](docs/PETROVA_NONCLI_SETUP.md) | UI whole-pipeline setup |
+| [Test & Ops Manual](docs/PETROVA_TEST_OPS_MANUAL.md) | mock data · weekly batch · data-loss test |
+| [Certification Track](docs/CERTIFICATION_TRACK.md) | SnowPro / Databricks / dbt mapped to the project |
+| [Project Status](docs/PROJECT_STATUS.md) | current state + data-model roadmap |
+
 ## Quick Start
 
 ```bash
@@ -225,10 +241,16 @@ petrova-pipeline/
 │   │   ├── intermediate/   #   Silver (4 models + SCD2 + schema tests)
 │   │   └── marts/          #   Gold (6 models: 3 facts + 3 dims + schema tests)
 │   └── packages.yml        #   dbt_utils, dbt_expectations, codegen
-├── docs/
+├── docs/                   # START: PETROVA_SYSTEM_MANUAL.md + PROJECT_STATUS.md
 │   ├── architecture/       #   SVG architecture diagram
-│   ├── interview_prep/     #   Talking points for senior data engineering interviews
-│   └── runbooks/           #   Incident response procedures
+│   ├── workflow_diagrams/  #   8 SVG pattern diagrams
+│   ├── runbooks/           #   incident_response, k8s_incident_playbook
+│   ├── upskill/            #   Databricks / dbt / Snowflake lab guides
+│   ├── PETROVA_SYSTEM_MANUAL.md      #   master: architecture + data arch + app design + ops
+│   ├── END_TO_END_WORKFLOW.md        #   master flow + Airflow DAG
+│   ├── STATIC_VS_DYNAMIC_INGESTION.md · SILVER_TRANSFORMATIONS.md
+│   ├── SENIOR_DE_END_TO_END.md · PETROVA_NONCLI_SETUP.md · PETROVA_TEST_OPS_MANUAL.md
+│   └── CERTIFICATION_TRACK.md · PETROVA_Data_Model.md · DASHBOARD_GUIDE.md · PROJECT_STATUS.md
 ├── great_expectations/     # Data quality suites & checkpoints
 ├── monitoring/             # PagerDuty config, notification procedures
 ├── scripts/                # Test generators, backup, env validation
