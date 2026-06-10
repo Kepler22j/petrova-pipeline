@@ -26,12 +26,37 @@ py -m streamlit run streamlit_app.py      # http://localhost:8501  (Demo mode)
 dbt run --target dev --profiles-dir dbt   # needs Snowflake creds
 ```
 
+## Documentation
+Full doc set in `docs/` — entry point: **`PETROVA_SYSTEM_MANUAL.md`**.
+
+| Doc | Purpose |
+|---|---|
+| **`PETROVA_SYSTEM_MANUAL.md`** ⭐ | master: architecture + data architecture + app design + ops |
+| `END_TO_END_WORKFLOW.md` | source → consumption flow + Airflow DAG |
+| `STATIC_VS_DYNAMIC_INGESTION.md` | 10 ingestion sources (static vs dynamic) |
+| `SILVER_TRANSFORMATIONS.md` | 10 Silver transforms (SQL) |
+| `SENIOR_DE_END_TO_END.md` | full-stack non-CLI + senior decisions |
+| `PETROVA_NONCLI_SETUP.md` | UI whole-pipeline setup |
+| `PETROVA_TEST_OPS_MANUAL.md` | mock data · weekly batch · data-loss test |
+| `CERTIFICATION_TRACK.md` | SnowPro / Databricks / dbt mapped to the project |
+| `PETROVA_Data_Model.md` · `query_performance_report.md` | data model · perf tuning |
+| `DASHBOARD_GUIDE.md` | 1st-line dashboard ops |
+| `runbooks/` · `architecture/` · `workflow_diagrams/` · `upskill/` | runbooks · SVG diagrams · lab guides |
+
 ## Next steps
 - [ ] Deploy/verify Streamlit Cloud (main file: `streamlit_app.py`).
 - [ ] SPC: replace fixed stddev thresholds (5 / 25) with per-sensor control limits.
 - [ ] Wire the 3-gate macro into `int_orders_validated` for parity with `int_sensor_cleaned`.
 - [ ] Strengthen `tests/e2e` assertions (currently permissive).
 - [ ] Connect Airflow gate queries to a live warehouse (currently demo-fallback).
+
+### Data-model hardening (from architecture review)
+- [ ] Add `dim_date` (calendar dimension) — close the date-dimension gap.
+- [ ] Push surrogate keys (`equipment_sk`) into facts; conform the star (vendor / customer / material).
+- [ ] Declare fact **grain** explicitly (e.g. 1 row per `sensor_id` + `reading_date`) + `unique_combination` tests.
+- [ ] Externalize alert thresholds to an `alert_thresholds` config table (remove hardcoded 5 / 0.3).
+- [ ] Carry `validation_status` (quality flag) through to Gold for rejected-data / auditor visibility.
+- [ ] Add partition (`reading_date`) + ZORDER (`sensor_id`) + centralized lineage (Unity Catalog / dbt exposures).
 
 ## Notes
 - `data/gold/*.csv` is committed (small) so the dashboard renders without a warehouse;
