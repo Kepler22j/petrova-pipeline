@@ -220,15 +220,11 @@ Full history tracking for slowly changing dimensions:
 ```
 petrova-pipeline/
 ├── .github/workflows/      # CI/CD (lint, dbt test, terraform validate)
-├── adf/                    # Azure Data Factory pipeline & linked service JSON
 ├── airflow/                # Dockerized orchestration stack
 │   ├── dags/               #   petrova_validated_pipeline.py
 │   ├── docker-compose.yml  #   Airflow + Jupyter-Spark + PostgreSQL
 │   └── Dockerfile          #   Custom image (PySpark 3.5.3 + dbt + Delta)
-├── dashboards/             # Visualization layer
-│   ├── streamlit/          #   Real-time ops dashboard (app.py)
-│   ├── powerbi/            #   Power BI connection guide
-│   └── ssrs/               #   SSRS scheduled reports
+├── assets/                 # Presentation deck (PDF + slide PNGs)
 ├── databricks/             # Databricks notebooks & pipelines
 │   ├── notebooks/          #   00_local_delta_lab, 01_bronze_ingest, 02_streaming, 03_delta_optimization
 │   ├── dlt/                #   Delta Live Tables pipeline
@@ -266,6 +262,7 @@ petrova-pipeline/
 ├── tests/
 │   ├── integration/        #   dbt compile/test validation
 │   └── e2e/                #   Full Bronze→Silver→Gold flow tests
+├── streamlit_app.py        # Real-time ops dashboard (Streamlit, repo root)
 ├── .env.example            # Credential template
 ├── .gitignore              # Python, dbt, Airflow, Terraform, secrets
 ├── .sqlfluff               # SQL linting rules (Snowflake dialect)
